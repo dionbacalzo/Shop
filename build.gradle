@@ -1,0 +1,55 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+	test.java.srcDir "test"	
+	main.java.srcDir "src"
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {	
+	compile 'com.fasterxml.jackson.core:jackson-core:2.9.3'	
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.9.3'
+	compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.3'
+	compile 'log4j:log4j:1.2.17'	
+	compile 'org.springframework:spring-context:5.0.2.RELEASE'
+	compile 'org.springframework:spring-test:5.0.2.RELEASE'
+	compile 'org.springframework:spring-core:5.0.2.RELEASE'
+	compile 'org.springframework:spring-beans:5.0.2.RELEASE'
+	compile 'org.springframework:spring-web:5.0.2.RELEASE'
+	compile 'org.springframework:spring-webmvc:5.0.2.RELEASE'
+	compile 'org.springframework.data:spring-data-commons:2.0.2.RELEASE'
+    compile 'org.springframework.data:spring-data-mongodb:2.0.2.RELEASE'
+    //compile 'org.springframework.hateoas:spring-hateoas:0.24.0.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-hateoas:1.5.9.RELEASE'
+    
+    
+	
+	providedCompile 'javax.servlet:javax.servlet-api:4.0.0'
+
+	testCompile 'junit:junit:4.12'
+	testCompile 'org.mockito:mockito-all:1.10.19'
+	testCompile 'org.springframework.boot:spring-boot-test:1.5.9.RELEASE'
+	testCompile 'org.springframework.boot:spring-boot-test-autoconfigure:1.5.9.RELEASE'	
+}
+
+war {
+	archiveName = 'shop.war'
+}
+
+//For Eclipse IDE only
+eclipse {
+  wtp {
+    component {
+      //define context path, default to project folder name
+      contextPath = 'shop'
+    }
+  }
+}
