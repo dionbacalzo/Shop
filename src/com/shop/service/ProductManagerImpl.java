@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.IntStream;
 
 import org.apache.log4j.Logger;
@@ -86,7 +87,7 @@ public class ProductManagerImpl implements ProductManager {
 		final String METHOD_NAME = "parseItem";
 		logger.info("Entering method " + METHOD_NAME);
 		
-		Map<String, Object> shopContent = new HashMap<String, Object>();
+		Map<String, Object> shopContent = new TreeMap<String, Object>();
 			
 		List<Item> products = new ArrayList<Item>();
 		if (itemList != null) {
@@ -106,8 +107,8 @@ public class ProductManagerImpl implements ProductManager {
 						product.setManufacturer(item.getManufacturer());
 						
 						products.add(product);
-						
-						shopContent.put("p00"+idx+1, product);
+						idx = idx + 1;
+						shopContent.put("p00"+idx, product);
 						
 					} else {
 						logger.error("found problematic item");

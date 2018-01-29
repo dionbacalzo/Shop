@@ -1,6 +1,8 @@
 package com.shop.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +23,7 @@ import com.shop.dto.Item;
 import com.shop.dto.ShopContentPage;
 import com.shop.service.ProductManager;
 
+@CrossOrigin //allow CORS for local testing
 @RestController
 public class ShopController {
 	
@@ -36,7 +40,9 @@ public class ShopController {
 		String json = "";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			json = mapper.writeValueAsString(productManagerImpl.viewAll());
+			Map<String, Object> items = new HashMap<String, Object>();
+			items.put("items", productManagerImpl.viewAll());
+			json = mapper.writeValueAsString(items);
 		} catch (JsonProcessingException e) {
 			logger.error(e);
 		}
