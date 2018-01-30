@@ -4,6 +4,8 @@
 ### Dependencies
 
 Java 8
+ * [download](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+ * [setup java PATH system variable](https://www.java.com/en/download/help/path.xml)
 
 Eclipse Oxygen
  * [download](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/oxygen2)
