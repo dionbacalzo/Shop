@@ -1,6 +1,10 @@
 package com.shop.util;
 
 import org.apache.log4j.Logger;
+
+import com.shop.constant.AppConstant;
+import com.shop.exception.ShopException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,21 +31,20 @@ public class DateUtil {
 		return parsedDate;
 	}
 	
-	public static Date getDate(String stringDate){
+	public static Date getDate(String stringDate) throws ShopException{
 		return getDate(stringDate, MONGODB_DATETIME_FORMAT);
 	}
 	
-	public static Date getDate(String stringDate, String pattern) {
+	public static Date getDate(String stringDate, String pattern) throws ShopException {
 		Date parsedDate = null;
 		if(stringDate != null && stringDate != "") {
 			SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 		    try
 		    {
 		    	parsedDate = formatter.parse(stringDate);		    	
-		    }
-		    catch (ParseException e)
-		    {
+		    } catch (ParseException e) {
 		      logger.error(e.getMessage());
+		      throw new ShopException(AppConstant.DATE_ERROR);
 		    }			
 		}
 		return parsedDate;

@@ -1,6 +1,7 @@
 package com.shop.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -8,7 +9,11 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -22,7 +27,7 @@ import com.mongodb.WriteConcern;
 @EnableSpringDataWebSupport
 @PropertySource(value= "classpath:/mongo.properties")
 @EnableMongoRepositories(basePackages = "com.shop.dao")
-public class AppConfig extends AbstractMongoConfiguration {
+public class AppConfig extends AbstractMongoConfiguration implements WebMvcConfigurer {
 
 	@Autowired
 	Environment env;
@@ -37,6 +42,19 @@ public class AppConfig extends AbstractMongoConfiguration {
 		MongoClient mongoClient = new MongoClient(new ServerAddress(env.getProperty("mongo.server"), Integer.parseInt( env.getProperty("mongo.port"))), options);
 		return mongoClient;
 		//return new MongoClient("localhost", 27017);
+	}
+	
+	@Bean
+	public ViewResolver getViewResolver() {
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("/WEB-INF/views/");
+		resolver.setSuffix(".jsp");
+		return resolver;
+	}
+
+	@Override
+	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
 
 	/*

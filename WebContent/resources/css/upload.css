@@ -1,0 +1,67 @@
+.title {
+	text-align: center;
+	font-weight: 600;
+	background-color: #2A6EA8;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 6px;
+    margin: 15px 0;
+}
+
+#uploadFileSubmit {
+	margin-top: 10px;
+}
+#uploadResult {
+	margin: 10px 5px 10px 5px;
+	min-height: 20px;
+}
+
+#itemTableContainer {
+	min-height: 510px;
+}
+
+
+#uploadItemtitle {
+	text-align: center;
+	font-size: 1.2em;
+	background-color: #e8e8e8;
+	padding: 10px 0px;
+}
+
+#uploadItemTable {
+	text-align: center;
+}
+
+#uploadItemTable th {
+    text-align: left;
+    color: #104A93;
+    background-color: #9BDAF7;
+    padding: 10px 5px;
+}
+
+#uploadItemTable td {
+	padding: 10px;
+	background-color: #ffffff;
+	border: 1px solid #104A93;
+}
+
+.warning {
+	color: red;
+}
+
+.success {
+	color: green;
+}
+
+.hidden {
+	display: none;
+}
+
+#loader {
+	position: absolute;
+	width: 50%;
+	height: 50%;
+    display: none;
+	background: url("../../resources/images/ajax-load-circle.gif") no-repeat center;
+	text-align: center;
+}

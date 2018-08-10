@@ -3,6 +3,7 @@ package com.shop.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class ItemDomainObject {
 	
 	@Id
-    private String id;
+    private ObjectId _id;
 	
 	@Field("title")
 	private String title;
@@ -27,12 +28,12 @@ public class ItemDomainObject {
 	@Field("releaseDate")
 	private Date releaseDate;
 
-	public String getId() {
-		return id;
+	public ObjectId get_id() {
+		return _id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void set_id(ObjectId _id) {
+		this._id = _id;
 	}
 
 	public String getTitle() {
@@ -75,5 +76,25 @@ public class ItemDomainObject {
 		this.releaseDate = releaseDate;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+        if (!(obj instanceof ItemDomainObject)) {
+            return false;
+        }
+
+        ItemDomainObject item = (ItemDomainObject) obj;
+
+		return this.title.equals(item.title) && this.releaseDate.equals(item.releaseDate);
+	}
 	
+	@Override
+    public int hashCode() {
+		int result = 17;
+		result = 31 * result + title.hashCode();
+		result = 31 * result + releaseDate.hashCode();
+		return result;
+    }
 }

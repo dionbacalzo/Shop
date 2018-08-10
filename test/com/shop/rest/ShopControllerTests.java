@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.shop.controller.ShopController;
 import com.shop.service.ProductManager;
 
 import junit.framework.TestCase;

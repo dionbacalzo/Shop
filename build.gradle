@@ -30,8 +30,6 @@ dependencies {
     //compile 'org.springframework.hateoas:spring-hateoas:0.24.0.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-hateoas:1.5.9.RELEASE'
     
-    
-	
 	providedCompile 'javax.servlet:javax.servlet-api:4.0.0'
 
 	testCompile 'junit:junit:4.12'
