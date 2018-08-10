@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.bson.types.ObjectId;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.constant.AppConstant;
@@ -77,7 +76,7 @@ public class FileContentAdapter {
 				//then the save() method is equivalent to an update with the upsert option set to true and the query predicate on the _id field.
 				if(list.contains(item)){
 					item.set_id(list.get(list.indexOf(item)).get_id());
-					logger.info("4ch " + item.get_id());
+					logger.debug("updating existing item" + item.getTitle());
 				}
 				
 				

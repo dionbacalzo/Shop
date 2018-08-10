@@ -48,16 +48,19 @@ curl -i -X POST -H "Content-Type:application/json" -d "[{ \"title\":\"4750Z\", \
 
 ### File Upload
 
+Javascript libraries used:
+ - [Jquery](https://jquery.com/)
+ - [Pagination.js](http://pagination.js.org/)
+ - [Handlebars.js](https://handlebarsjs.com/)
+
 text file format: 
 
-**items separated by newline, content is separated commas but ignore commas within double-quotes**
+**items separated by newline, content is separated with commas but ignore commas within double-quotes**
  - title,price,type,manufacturer,release date(yyyy-MM-dd HH:mm:ss.SSS)
 
 e.g.
 
 Shop.txt
-
 Pixel 2,600,phone,Google,2018-03-22 00:00:00.000
-
 Galaxy S9,719,phone,Samsung,2018-05-00 00:00:00.000 
  
