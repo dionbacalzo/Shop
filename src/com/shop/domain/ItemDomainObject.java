@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.util.StringUtils;
 
 @CompoundIndex(name = "unique_item", def = "{'title' : 1, 'releaseDate' : 1}", unique = true)
 @Document(collection = "ItemDomainObject")
@@ -86,15 +87,21 @@ public class ItemDomainObject {
         }
 
         ItemDomainObject item = (ItemDomainObject) obj;
-
+        if (!StringUtils.isEmpty(this._id) && !StringUtils.isEmpty(item._id)) {
+        	return this._id.equals(item._id);
+        }
 		return this.title.equals(item.title) && this.releaseDate.equals(item.releaseDate);
 	}
 	
 	@Override
     public int hashCode() {
 		int result = 17;
-		result = 31 * result + title.hashCode();
-		result = 31 * result + releaseDate.hashCode();
+		if(!StringUtils.isEmpty(this._id)) {
+			result = 31 * result + _id.hashCode();
+		} else {
+			result = 31 * result + title.hashCode();
+			result = 31 * result + releaseDate.hashCode();
+		}
 		return result;
     }
 }

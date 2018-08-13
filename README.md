@@ -30,7 +30,7 @@ After installing the dependencies stated above run the following commands
 	gradlew.bat eclipse // to setup eclipse setting and be ready for import
 	
 ```
-
+access the homepage by going to: http://localhost:8080/shop/content
 
 ### Sample Curl scripts
 
@@ -47,6 +47,8 @@ curl -i -X POST -H "Content-Type:application/json" -d "[{ \"title\":\"4750Z\", \
 ```
 
 ### File Upload
+
+Access the page by going to: http://localhost:8080/shop/upload
 
 Javascript libraries used:
  - [Jquery](https://jquery.com/)

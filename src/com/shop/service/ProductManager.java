@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.domain.ItemDomainObject;
 import com.shop.dto.InventoryItem;
+import com.shop.exception.ShopException;
 
 @Service
 public interface ProductManager {
@@ -21,5 +22,7 @@ public interface ProductManager {
 	public List<ItemDomainObject> saveAll(List<InventoryItem> shopList);
 
 	public void saveAll(MultipartFile file) throws Exception;
+
+	public void delete(InventoryItem item) throws ShopException;
 
 }

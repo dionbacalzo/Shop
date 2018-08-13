@@ -16,6 +16,7 @@ import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -163,6 +164,30 @@ public class ShopController {
 			}
 		} else {
 			message = AppConstant.SHOP_ITEM_FILE_EMPTY;
+		}
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		return message;
+	}
+	
+	@RequestMapping(value = "delete")
+	@ResponseBody
+	public String delete(@RequestBody InventoryItem item) {
+		logger.debug(AppConstant.METHOD_IN);
+		
+		String message = "";
+		if (!StringUtils.isEmpty(item)) {
+			try {
+				
+				productManagerImpl.delete(item);
+				
+				message = AppConstant.SHOP_ITEM_DELETE_SUCCESS;
+			} catch (Exception e) {
+				logger.error(e);
+				message = AppConstant.SHOP_ITEM_DELETE_FAIL;
+			}
+		} else {
+			message = AppConstant.SHOP_ITEM_DELETE_FAIL;
 		}
 		
 		logger.debug(AppConstant.METHOD_OUT);

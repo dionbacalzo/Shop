@@ -21,12 +21,10 @@ public class AppConstant {
 	
 	public static final String SHOP_ITEM_UPLOAD_SUCCESS = "Successfully uploaded file: {0}";
 	
-	public static final String SHOP_ITEM_DELETE_SUCCESS = "File successfully deleted";
+	public static final String SHOP_ITEM_DELETE_SUCCESS = "Item successfully deleted";
 	
-	public static final String SHOP_ITEM_DELETE_FAIL = "Failed to delete the file";
+	public static final String SHOP_ITEM_DELETE_FAIL = "Failed to delete the item";
 	
-	public static final String SHOP_ITEM_DOWNLOAD_FAIL = "Failed to download the file: {0}";
-
 	public static final int TOTAL_SHOP_ITEM_SIZE = 5;
 
 	public static final String SHOP_ITEM_ROW_SIZE_ERROR = "Shop item should have exactly {0} values separated by comma at line {1}";
@@ -34,4 +32,8 @@ public class AppConstant {
 	public static final String INVALID_PRICE_ERROR = "The Price is not in a number format";
 
 	public static final String DATE_ERROR = "Unable to parse Date";
+
+	public static final String SHOP_ITEM_DELETE_MISSING_REQUIRED = "Unable to delete due to missing unique identifiers: id or title/releaseDate";
+
+	public static final String SHOP_ITEM_DELETE_NOT_FOUND = "Unable to delete: {0} not found";
 }

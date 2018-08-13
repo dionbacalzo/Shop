@@ -140,6 +140,7 @@ public class ShopItemAdapter {
 					try {
 						if(ShopUtil.validateItemDomain(item)) {
 							InventoryItem product = new InventoryItem();
+							product.setId(item.get_id().toString());
 							product.setTitle(item.getTitle());
 							product.setPrice(item.getPrice());
 							product.setReleaseDate(DateUtil.formatDate(item.getReleaseDate()));

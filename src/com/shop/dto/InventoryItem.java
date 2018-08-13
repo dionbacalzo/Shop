@@ -10,6 +10,8 @@ import java.math.BigDecimal;
  *
  */
 public class InventoryItem {
+	
+	private String id;
 
 	private String title;
 	
@@ -20,6 +22,14 @@ public class InventoryItem {
 	private String releaseDate;
 	
 	private String type;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getTitle() {
 		return title;
