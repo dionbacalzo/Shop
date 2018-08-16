@@ -1,5 +1,6 @@
-<div  class="col-12">
+<div class="col-12">
 	<button id="addItem">Add</button>
+	<button id="saveContent">Save</button>
 </div>
 <div id="uploadItemtitle" class="col-12">
 	Item List
@@ -16,19 +17,19 @@
 	<tbody>
 	{{#itemList}}
 	<tr>
-		<td>
+		<td contenteditable class="itemAttr-title">
 			{{title}}
 		</td>
-		<td>
+		<td contenteditable class="itemAttr-price">
 			{{price}}
 		</td>
-		<td>
+		<td contenteditable class="itemAttr-type">
 			{{type}}
 		</td>
-		<td>
+		<td contenteditable class="itemAttr-manufacturer">
 			{{manufacturer}}
 		</td>
-		<td>
+		<td contenteditable class="itemAttr-releaseDate">
 			{{releaseDate}}
 		</td>
 		<td>

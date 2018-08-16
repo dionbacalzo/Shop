@@ -63,6 +63,8 @@ text file format:
 e.g.
 
 Shop.txt
+
 Pixel 2,600,phone,Google,2018-03-22 00:00:00.000
+
 Galaxy S9,719,phone,Samsung,2018-05-00 00:00:00.000 
  

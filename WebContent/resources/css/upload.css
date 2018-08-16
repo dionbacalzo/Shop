@@ -40,6 +40,7 @@
 }
 
 #uploadItemTable td {
+	height: 35px;
 	padding: 10px;
 	background-color: #ffffff;
 	border: 1px solid #104A93;

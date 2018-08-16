@@ -19,7 +19,9 @@ public interface ProductManager {
 	
 	public Map<String, Object> searchByManufacturer(String manufacturer);
 	
-	public List<ItemDomainObject> saveAll(List<InventoryItem> shopList);
+	public List<InventoryItem> saveAll(List<InventoryItem> shopList);
+	
+	public List<ItemDomainObject> insertAll(List<InventoryItem> addList);
 
 	public void saveAll(MultipartFile file) throws Exception;
 

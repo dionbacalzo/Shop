@@ -78,13 +78,30 @@ public class ShopController {
 		return json;
 	}
 	
-	@RequestMapping(value = "/addItems")
-	public String addItems(@RequestBody List<InventoryItem> searchQuery) {
+	@RequestMapping(value = "/save")
+	public String saveItems(@RequestBody List<InventoryItem> itemList) {
 		logger.debug(AppConstant.METHOD_IN);
 		
 		String json = "";
 		try {
-			json = new ObjectMapper().writeValueAsString(productManagerImpl.saveAll(searchQuery));
+			Map<String, Object> items = new HashMap<String, Object>();
+			items.put("itemList", productManagerImpl.saveAll(itemList));
+			json = new ObjectMapper().writeValueAsString(items);
+		} catch (JsonProcessingException e) {
+			logger.error(e);
+		}
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		return json;		
+	}
+	
+	@RequestMapping(value = "/addItems")
+	public String insertItems(@RequestBody List<InventoryItem> itemList) {
+		logger.debug(AppConstant.METHOD_IN);
+		
+		String json = "";
+		try {
+			json = new ObjectMapper().writeValueAsString(productManagerImpl.insertAll(itemList));
 		} catch (JsonProcessingException e) {
 			logger.error(e);
 		}

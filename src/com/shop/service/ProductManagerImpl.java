@@ -1,6 +1,7 @@
 package com.shop.service;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +55,30 @@ public class ProductManagerImpl implements ProductManager {
 	}
 
 	@Override
-	public List<ItemDomainObject> saveAll(List<InventoryItem> addList) {
+	public List<InventoryItem> saveAll(List<InventoryItem> addList) {
+		logger.debug(AppConstant.METHOD_IN);		
+		List<ItemDomainObject> newList = null;
+		try {
+			List<ItemDomainObject> oldList = productDaoImpl.findAll();
+			List<ItemDomainObject> currentList = ShopItemAdapter.parseItemInventory(addList);
+			List<ItemDomainObject> deleteList = new ArrayList<ItemDomainObject>(oldList);
+			deleteList.removeAll(currentList);
+			
+			productDaoImpl.deleteAll(deleteList);
+			
+			newList = productDaoImpl.saveAll(currentList);
+		} catch (DuplicateKeyException e) {
+			logger.error("Duplicate item " + e.getMessage());
+	    } catch (MongoException e) {
+	    	logger.error(e.getMessage());
+	    };
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		return ShopItemAdapter.parseItemRaw(newList);		
+	}
+	
+	@Override
+	public List<ItemDomainObject> insertAll(List<InventoryItem> addList) {
 		logger.debug(AppConstant.METHOD_IN);		
 		List<ItemDomainObject> itemList = null;
 		try {

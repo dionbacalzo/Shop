@@ -2,6 +2,8 @@ package com.shop.dto;
 
 import java.math.BigDecimal;
 
+import org.springframework.util.StringUtils;
+
 /**
  * 
  * @author Dionisio.Bacalzo
@@ -70,5 +72,33 @@ public class InventoryItem {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+        if (!(obj instanceof InventoryItem)) {
+            return false;
+        }
+
+        InventoryItem item = (InventoryItem) obj;
+        if (!StringUtils.isEmpty(this.id) && !StringUtils.isEmpty(item.id)) {
+        	return this.id.equals(item.id);
+        }
+		return this.title.equals(item.title) && this.releaseDate.equals(item.releaseDate);
+	}
+	
+	@Override
+    public int hashCode() {
+		int result = 17;
+		if(!StringUtils.isEmpty(this.id)) {
+			result = 31 * result + id.hashCode();
+		} else {
+			result = 31 * result + title.hashCode();
+			result = 31 * result + releaseDate.hashCode();
+		}
+		return result;
+    }
 	
 }

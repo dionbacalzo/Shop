@@ -50,4 +50,22 @@ public class DateUtil {
 		return parsedDate;
 	}
 	
+	public static boolean isThisDateValid(String dateToValidate, String dateFromat){
+		boolean result = false;
+		if(dateToValidate != null){
+			SimpleDateFormat sdf = new SimpleDateFormat(dateFromat);
+			sdf.setLenient(false);
+			try {
+				//if not valid, it will throw ParseException
+				sdf.parse(dateToValidate);
+				logger.debug("Matching date format is " + dateFromat);
+				result = true;
+			} catch (ParseException e) {
+				logger.debug(e.getMessage());
+				result = false;
+			}
+		}
+		return result;
+	}
+	
 }

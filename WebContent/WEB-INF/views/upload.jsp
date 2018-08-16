@@ -8,9 +8,12 @@
 <link rel="stylesheet" href="resources/css/bootstrap.css">
 <link rel="stylesheet" href="resources/css/upload.css">
 <link rel="stylesheet" href="resources/css/pagination.css">
+
 <script type="text/javascript">
+	//Set Global Variables Here 
 	var contextPath = "${pageContext.request.contextPath}";
 </script>
+
 <script id="itemTemplate" type="text/x-handlebars-template">
 	<%@ include file="/WEB-INF/views/partials/itemTable.jsp" %>
 </script>
@@ -18,6 +21,24 @@
 <body>
 	<div id="header" class="col-12">
 		<h1>SHOP</h1>
+	</div>
+
+	<!-- The Modal -->
+	<div id="confirmModal" class="modal col-12">
+		<!-- Modal content -->
+		<div class="modal-content">
+			<div class="modal-header">
+				<span class="close">&times;</span>
+				<h2>Confirm</h2>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure?</p>
+			</div>
+			<div class="modal-footer">
+				<button id="modal-ok">ok</button>
+				<button id="modal-cancel">cancel</button>
+			</div>
+		</div>
 	</div>
 
 	<div class="col-3">&nbsp;</div>

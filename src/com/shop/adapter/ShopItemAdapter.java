@@ -7,6 +7,8 @@ import java.util.TreeMap;
 import java.util.stream.IntStream;
 
 import org.apache.log4j.Logger;
+import org.bson.types.ObjectId;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -182,10 +184,24 @@ public class ShopItemAdapter {
 				try {
 					if(ShopUtil.validateItemInventory(item)) {
 						ItemDomainObject product = new ItemDomainObject();					
+						if (!StringUtils.isEmpty(item.getId())) {
+							product.set_id(new ObjectId(item.getId()));
+						}
 						product.setTitle(item.getTitle());
 						product.setType(item.getType());
 						product.setPrice(item.getPrice());
-						product.setReleaseDate(DateUtil.getDate(item.getReleaseDate(), DateUtil.DEFAULT_DATETIME_FORMAT));
+						
+						//get matching format date
+						String formatDate = DateUtil.DEFAULT_DATETIME_FORMAT;
+						if(DateUtil.isThisDateValid(item.getReleaseDate(), DateUtil.DEFAULT_DATETIME_FORMAT)){
+							formatDate = DateUtil.DEFAULT_DATETIME_FORMAT;
+						} else if(DateUtil.isThisDateValid(item.getReleaseDate(), DateUtil.DATE_PATTERN_1)){
+							formatDate = DateUtil.DATE_PATTERN_1;
+						} else if(DateUtil.isThisDateValid(item.getReleaseDate(), DateUtil.MONGODB_DATETIME_FORMAT)){
+							formatDate = DateUtil.MONGODB_DATETIME_FORMAT;
+						}
+						
+						product.setReleaseDate(DateUtil.getDate(item.getReleaseDate(), formatDate));
 						product.setManufacturer(item.getManufacturer());
 						products.add(product);
 					} else {
