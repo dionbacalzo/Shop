@@ -29,7 +29,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<span class="close">&times;</span>
-				<h2>Confirm</h2>
+				Confirm
 			</div>
 			<div class="modal-body">
 				<p>Are you sure?</p>

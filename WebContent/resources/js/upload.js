@@ -3,6 +3,7 @@
 var REPORT_ROW_TOTAL = 10;
 var $window = $(window);
 var $uploadform = $("#uploadform");
+var $uploadFileInput = $("#uploadFileInput");
 var $uploadResult = $("#uploadResult");
 var $itemTableContainer = $("#itemTableContainer");
 var $pagination = $('#pagination');
@@ -12,6 +13,44 @@ var warningCss = "warning";
 //Get the modal
 var modal = $('#confirmModal');
 
+function initializeModal(){
+	// Get the <span> element that closes the modal
+	var closeButton = $(".close");
+	// When the user clicks on <span> (x), close the modal
+	closeButton.click(function(){
+	    modal.hide();
+	});
+	//When the user clicks on cancel button, close the modal
+	$("#modal-cancel").click(function(){
+		modal.hide();
+	});
+}
+
+function initializeModalFunction($button, message, callback){
+	// When the user clicks the button, open the modal 
+	$button.click(function(){
+		if(message !== undefined && message !== "") {
+			modal.find(".modal-body p").text(message);
+		}
+		modal.show();
+	    $("#modal-ok").click(function() {
+			callback();
+			modal.hide();
+			$(this).unbind();
+		});
+	});
+	
+}
+
+//serialize data function
+function objectifyForm(formArray) {
+	var returnArray = {};
+	for (var i = 0; i < formArray.length; i++) {
+		returnArray[formArray[i]['name']] = formArray[i]['value'];
+	}
+	return returnArray;
+}
+
 function initializeUploadForm() {
 	$uploadform.submit(function(event) {
 		event.preventDefault();
@@ -19,7 +58,7 @@ function initializeUploadForm() {
 		$uploadResult.text("");
 
 		// add css display for the result
-		var $uploadFileInput = $("#uploadFileInput");
+		
 		if ($uploadResult.hasClass(warningCss)) {
 			$uploadResult.removeClass(warningCss);
 		}
@@ -117,7 +156,7 @@ function initializeEdit($element, field){
 	});
 }
 
-function initializeButtons() {
+function initializeContentTable() {
 	
 	//initialize edit
 	$("#uploadItemTable td").each(function(index, element) {
@@ -184,41 +223,6 @@ function initializeButtons() {
 	    formCell.appendChild(form)
 	});
 	
-	/*$("#saveContent").click(function(){
-		//initialize edit
-		var itemList = [];
-		$("#uploadItemTable tr form").each(function(index, element) {
-			var item = objectifyForm($(element).serializeArray());
-			itemList.push(item);
-		});
-		if(itemList.length > 0) {
-			$.ajax({
-				url : contextPath + "/save",
-				type : "POST",
-				data : JSON.stringify(itemList),
-				contentType : "application/json; charset=utf-8",
-				beforeSend : function() {
-					$loader.show();
-				},
-				complete : function() {
-					$loader.hide();
-				},
-				success : function(data) {
-					updateTable(data);
-				},
-				error : function(data) {
-					$uploadResult.addClass(warningCss);
-					$uploadResult.text("Unable to save");
-					// reset input form
-					$uploadFileInput.val("");
-					// reload history
-					showItems();
-				}
-			});
-		} else {
-			//TODO: empty list
-		}
-	});*/
 	var $saveContent = $("#saveContent");
 	initializeModalFunction($saveContent, "Are you sure you want to update?", function(){
 		//initialize edit
@@ -241,6 +245,8 @@ function initializeButtons() {
 				},
 				success : function(data) {
 					updateTable(data);
+					$uploadResult.addClass(successCss);
+					$uploadResult.text("Successfully saved");
 				},
 				error : function(data) {
 					$uploadResult.addClass(warningCss);
@@ -257,15 +263,6 @@ function initializeButtons() {
 	});
 }
 
-// serialize data function
-function objectifyForm(formArray) {
-	var returnArray = {};
-	for (var i = 0; i < formArray.length; i++) {
-		returnArray[formArray[i]['name']] = formArray[i]['value'];
-	}
-	return returnArray;
-}
-
 function updateTable(data){
 	if (data !== undefined && JSON.parse(data).length !== 0) {
 		// var files = {"itemList" : JSON.parse(data)};
@@ -274,7 +271,7 @@ function updateTable(data){
 		var template = Handlebars.compile(source);
 		if (files.itemList && files.itemList.length - 1 < REPORT_ROW_TOTAL) {
 			// $itemTableContainer.html(template(files));
-			// initializeButtons();
+			// initializeContentTable();
 			$pagination.pagination({
 				dataSource : files.itemList,
 				showNavigator : true,
@@ -289,21 +286,23 @@ function updateTable(data){
 						itemList : data
 					});
 					$itemTableContainer.html(dataHtml);
-					initializeButtons();
+					initializeContentTable();
 				}
 			});
 		} else {
+			//TODO: pagination does not work with save, edit function
 			$pagination.pagination({
 				dataSource : files.itemList,
 				showNavigator : true,
 				formatNavigator : '<span>Page <%= currentPage %> of <%= totalPage %>, Total Results: <%= totalNumber%> </span>',
 				pageSize : REPORT_ROW_TOTAL,
 				callback : function(data, pagination) {
-					// var dataHtml = template({
-					// itemList: data });
-					var dataHtml = template(data);
+					 var dataHtml = template({
+						 itemList: data 
+					 });
+					//var dataHtml = template(data);
 					$itemTableContainer.html(dataHtml);
-					initializeButtons();
+					initializeContentTable();
 				}
 			});
 		}
@@ -319,49 +318,24 @@ function showItems() {
 	$.ajax({
 		url : contextPath + "/viewListUnparsed",
 		cache : false,
+		beforeSend : function() {
+			$loader.show();
+		},
+		complete : function() {
+			$loader.hide();
+		},
 		success : function(data) {
 			updateTable(data);
 		},
 		error : function(data) {
 			$uploadResult.addClass(warningCss);
-			$uploadResult.text("Unable to upload");
+			$uploadResult.text("Unable to show items");
 			// reset input form
 			$uploadFileInput.val("");
-			// reload history
-			showItems();
 		}
 	});
 }
 
-function initializeModal(){
-	// Get the <span> element that closes the modal
-	var closeButton = $(".close");
-	// When the user clicks on <span> (x), close the modal
-	closeButton.click(function(){
-	    modal.hide();
-	});
-	//When the user clicks on cancel button, close the modal
-	$("#modal-cancel").click(function(){
-		modal.hide();
-	});
-}
-
-function initializeModalFunction($button, message, callback){
-	// When the user clicks the button, open the modal 
-	$button.click(function(){
-		if(message !== undefined && message !== "") {
-			modal.find(".modal-body p").text(message);
-		}
-	    modal.show();
-	});
-	
-	$button.click(function() {
-		$("#modal-ok").click(function() {
-			callback();
-			modal.hide();
-		});
-	});
-}
 
 $(document).ready(function() {
 	initializeUploadForm();
