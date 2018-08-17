@@ -19,10 +19,12 @@ function initializeModal(){
 	// When the user clicks on <span> (x), close the modal
 	closeButton.click(function(){
 	    modal.hide();
+	    $("#modal-ok").unbind();
 	});
 	//When the user clicks on cancel button, close the modal
 	$("#modal-cancel").click(function(){
 		modal.hide();
+		$("#modal-ok").unbind();
 	});
 }
 
