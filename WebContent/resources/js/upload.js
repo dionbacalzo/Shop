@@ -191,7 +191,7 @@ function initializeContentTable() {
 			initializeEdit($(currentCell), cellList[i]);
 		}
 		deleteCell = row.insertCell(cellList.length);
-		deleteButton = document.createElement("button");
+		var deleteButton = document.createElement("button");
 		deleteButton.className = "deleteButton";
 		//initializeDelete($(deleteButton));
 		initializeModalFunction($(deleteButton), "Are you sure you want to delete this?", function(){
