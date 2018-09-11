@@ -5,3 +5,7 @@
 #loginForm [class*="col-"] {
 	margin: 3px 0;
 }
+
+#signupForm [class*="col-"] {
+	margin: 3px 0;
+}

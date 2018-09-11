@@ -67,4 +67,10 @@ Shop.txt
 Pixel 2,600,phone,Google,2018-03-22 00:00:00.000
 
 Galaxy S9,719,phone,Samsung,2018-05-00 00:00:00.000 
+
+### Login/Signup
+
+Simple login and signup using scrypt key derivation for password protection 
+
+Credits to [Will Glozer](https://github.com/wg/scrypt) for the java implementation of scrypt
  
