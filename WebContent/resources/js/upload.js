@@ -163,7 +163,7 @@ function initializeContentTable() {
 	//initialize edit
 	$("#uploadItemTable td").each(function(index, element) {
 		$(element).each(function(i, cell) {
-			if(cell.className.includes("itemAttr-")){
+			if(cell.className.indexOf("itemAttr-")){
 				var field = cell.className.replace('itemAttr-','');
 				initializeEdit($(cell), field)
 			}

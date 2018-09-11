@@ -31,6 +31,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shop.dto.InventoryItem;
 import com.shop.dto.Item;
 import com.shop.dto.ShopContentPage;
+import com.shop.dto.User;
+import com.shop.service.LoginManager;
 import com.shop.service.ProductManager;
 
 import com.shop.constant.AppConstant;
@@ -43,6 +45,9 @@ public class ShopController {
 	
 	@Autowired @Qualifier("productManagerImpl")	
 	private ProductManager productManagerImpl;
+	
+	@Autowired @Qualifier("loginManagerImpl")	
+	private LoginManager loginManagerImpl;
 	
 	@RequestMapping(value = "/viewList")
 	public String viewList() {
@@ -122,9 +127,18 @@ public class ShopController {
 		return new ResponseEntity<ShopContentPage> (shopContentPage, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "")
+	protected ModelAndView viewHomePage() throws Exception {
+		logger.debug(AppConstant.METHOD_IN);
+		
+		ModelAndView model = new ModelAndView("content");
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		return model;
+	}
+	
 	@RequestMapping(value = "/content")
-	protected ModelAndView viewContentPage(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	protected ModelAndView viewContentPage() throws Exception {
 		logger.debug(AppConstant.METHOD_IN);
 		
 		ModelAndView model = new ModelAndView("content");
@@ -134,8 +148,7 @@ public class ShopController {
 	}
 	
 	@RequestMapping(value = "/upload")
-	protected ModelAndView viewUploadPage(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	protected ModelAndView viewUploadPage() throws Exception {
 		logger.debug(AppConstant.METHOD_IN);
 		
 		ModelAndView model = new ModelAndView("upload");
@@ -211,4 +224,47 @@ public class ShopController {
 		return message;
 	}
 	
+	@RequestMapping(value = "login")
+	protected ModelAndView viewLoginPage() throws Exception {
+		logger.debug(AppConstant.METHOD_IN);
+		
+		ModelAndView model = new ModelAndView("login");
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		return model;
+	}
+	
+	@RequestMapping(value = "loginUser")
+	protected String login( @RequestBody User user) throws Exception {
+		logger.debug(AppConstant.METHOD_IN);
+		
+		String result = null;
+		try {
+			result = loginManagerImpl.login(user);
+		} catch (Exception e){
+			result = AppConstant.SHOP_UNSUCCESSFUL_LOGIN;
+			logger.error(e.getMessage());
+		}
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "signupUser")
+	protected String signup( @RequestBody User user) throws Exception {
+		logger.debug(AppConstant.METHOD_IN);
+		
+		String result = null;
+		try {
+			result = loginManagerImpl.signup(user);
+		} catch (Exception e){
+			result = AppConstant.SHOP_UNSUCCESSFUL_SIGNUP;
+			logger.error(e.getMessage());
+		}
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		
+		return result;
+	}
 }

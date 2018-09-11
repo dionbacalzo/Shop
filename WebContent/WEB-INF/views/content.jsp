@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="resources/css/bootstrap.css">
 <link rel="stylesheet" href="resources/css/content.css">
-<title>Shop Display</title>
+<title>Shop Display: Home</title>
 </head>
 <body>
 	<div id="header" class="col-12">
@@ -19,6 +19,7 @@
 		<div id="main-navbar" class="col-12">
 			<ul>
 				<li><a class="active">Home</a></li>
+				<li><a href="login">Login</a></li>
 				<li><a href="upload">Upload</a></li>
 			</ul>
 		</div>

@@ -36,4 +36,16 @@ public class AppConstant {
 	public static final String SHOP_ITEM_DELETE_MISSING_REQUIRED = "Unable to delete due to missing unique identifiers: id or title/releaseDate";
 
 	public static final String SHOP_ITEM_DELETE_NOT_FOUND = "Unable to delete: {0} not found";
+	
+	public static final String SHOP_UNSUCCESSFUL_LOGIN = "unable to login";
+	
+	public static final String SHOP_SUCCESSFUL_LOGIN = "successfully logged in";
+
+	public static final String SHOP_UNSUCCESSFUL_SIGNUP = "unable to signup";
+	
+	public static final String SHOP_SUCCESSFUL_SIGNUP = "successfully signed up";
+
+	public static final String SHOP_USER_NOT_FOUND = "user {0} not found";
+
+	public static final String SHOP_USER_PASSWORD_MISMATCH = "password does not match for user {0}";
 }

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Shop Upload</title>
+<title>Shop Upload: Upload</title>
 <link rel="stylesheet" href="resources/css/bootstrap.css">
 <link rel="stylesheet" href="resources/css/upload.css">
 <link rel="stylesheet" href="resources/css/pagination.css">
@@ -18,6 +18,7 @@
 	<%@ include file="/WEB-INF/views/partials/itemTable.jsp" %>
 </script>
 </head>
+
 <body>
 	<div id="header" class="col-12">
 		<h1>SHOP</h1>
@@ -47,6 +48,7 @@
 		<div id="main-navbar" class="col-12">
 			<ul>
 				<li><a href="content">Home</a></li>
+				<li><a href="login">Login</a></li>
 				<li><a class="active">Upload</a></li>
 			</ul>
 		</div>

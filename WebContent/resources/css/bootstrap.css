@@ -179,6 +179,14 @@ h1, h2 {
 	color: #fff;
 }
 
+.warning {
+	color: red;
+}
+
+.success {
+	color: green;
+}
+
 #footer {
 	margin: 0;
 	padding: 15px;

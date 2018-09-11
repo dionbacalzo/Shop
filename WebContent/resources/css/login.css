@@ -1,0 +1,7 @@
+#loginForm {
+	margin: 15px 0;
+}
+
+#loginForm [class*="col-"] {
+	margin: 3px 0;
+}
