@@ -70,6 +70,8 @@ Galaxy S9,719,phone,Samsung,2018-05-00 00:00:00.000
 
 ### Login/Signup
 
+Access the page by going to: http://localhost:8080/shop/login
+
 Simple login and signup using scrypt key derivation for password protection 
 
 Credits to [Will Glozer](https://github.com/wg/scrypt) for the java implementation of scrypt

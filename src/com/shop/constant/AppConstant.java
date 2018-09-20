@@ -48,4 +48,8 @@ public class AppConstant {
 	public static final String SHOP_USER_NOT_FOUND = "user {0} not found";
 
 	public static final String SHOP_USER_PASSWORD_MISMATCH = "password does not match for user {0}";
+
+	public static final String SHOP_USER_EXCEEDED_LOGIN_ATTEMPT = "user {0} has exceeded login attempt";
+
+	public static final String SHOP_EXCEEDED_LOGIN_ATTEMPT = "exceeded login attempt";
 }

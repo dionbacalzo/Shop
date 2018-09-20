@@ -29,7 +29,9 @@ dependencies {
     compile 'org.springframework.data:spring-data-mongodb:2.0.2.RELEASE'
     //compile 'org.springframework.hateoas:spring-hateoas:0.24.0.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-hateoas:1.5.9.RELEASE'
-    
+    compile 'org.springframework.boot:spring-boot-starter-hateoas:1.5.9.RELEASE'
+	compile 'org.apache.tiles:tiles-jsp:3.0.8'		
+	
 	providedCompile 'javax.servlet:javax.servlet-api:4.0.0'
 
 	testCompile 'junit:junit:4.12'

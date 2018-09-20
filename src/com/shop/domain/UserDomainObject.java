@@ -15,6 +15,10 @@ public class UserDomainObject {
 	private String userName;
 	
 	private String password;
+	
+	private String role;
+	
+	private int tryCounter;
 
 	public ObjectId get_id() {
 		return _id;
@@ -38,5 +42,21 @@ public class UserDomainObject {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public int getTryCounter() {
+		return tryCounter;
+	}
+
+	public void setTryCounter(int tryCounter) {
+		this.tryCounter = tryCounter;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 }

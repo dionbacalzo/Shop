@@ -113,7 +113,7 @@ function initializeSignupForm() {
 				success : function(data) {
 					if(data.toUpperCase() === "unable to signup".toUpperCase()){
 						$signupResult.addClass(warningCss);
-						$signupResult.text("Unable to log in");
+						$signupResult.text("Unable to signup");
 					} else {
 						$signupResult.addClass(successCss);
 						$signupResult.text(data);
@@ -121,7 +121,7 @@ function initializeSignupForm() {
 				},
 				error : function(data) {
 					$signupResult.addClass(warningCss);
-					$signupResult.text("Unable to log in");
+					$signupResult.text("Unable to signup");
 				}
 			});
 		}

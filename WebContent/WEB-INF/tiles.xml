@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+ 
+<tiles-definitions>  
+  
+   <!-- Template Definition -->
+   <definition name="template-def" template="/WEB-INF/views/tiles/layouts/defaultLayout.jsp">  
+       <put-attribute name="title" value="" />  
+       <put-attribute name="header" value="/WEB-INF/views/tiles/templates/defaultHeader.jsp" />  
+       <put-attribute name="menu" value="/WEB-INF/views/tiles/templates/defaultMenu.jsp" />  
+       <put-attribute name="body" value="" />  
+       <put-attribute name="footer" value="/WEB-INF/views/tiles/templates/defaultFooter.jsp" />  
+   </definition>  
+  
+   <!-- Main Page -->
+   <definition name="content" extends="template-def">  
+       <put-attribute name="title" value="Shop Display: Home" />  
+       <put-attribute name="body" value="/WEB-INF/views/content.jsp" />  
+   </definition>  
+ 
+   <!-- Login Page -->
+   <definition name="login" extends="template-def">  
+       <put-attribute name="title" value="Shop Display: Login" />  
+       <put-attribute name="body" value="/WEB-INF/views/login.jsp" />  
+   </definition>  
+       
+   <!-- Upload Page -->
+   <definition name="upload" extends="template-def">  
+       <put-attribute name="title" value="Shop Display: Upload" />  
+       <put-attribute name="body" value="/WEB-INF/views/upload.jsp" />  
+   </definition>  
+  
+</tiles-definitions>

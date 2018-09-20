@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,14 +25,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shop.constant.AppConstant;
 import com.shop.dto.InventoryItem;
 import com.shop.dto.Item;
 import com.shop.dto.ShopContentPage;
 import com.shop.dto.User;
 import com.shop.service.LoginManager;
 import com.shop.service.ProductManager;
-
-import com.shop.constant.AppConstant;
 
 @CrossOrigin //allow CORS for local testing
 @RestController

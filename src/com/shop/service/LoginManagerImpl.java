@@ -46,10 +46,21 @@ public class LoginManagerImpl implements LoginManager {
 					result = AppConstant.SHOP_UNSUCCESSFUL_LOGIN;
 					logger.debug(MessageFormat.format(AppConstant.SHOP_USER_NOT_FOUND, user.getUserName()));
 				} else {
-					boolean matched = SCryptUtil.check(user.getPassword(), availableUser.getPassword());
-					if(!matched){
-						logger.debug(MessageFormat.format(AppConstant.SHOP_USER_PASSWORD_MISMATCH, user.getUserName()));
-						result = AppConstant.SHOP_UNSUCCESSFUL_LOGIN;
+					if(availableUser.getTryCounter() >= 3){
+						logger.debug(MessageFormat.format(AppConstant.SHOP_USER_EXCEEDED_LOGIN_ATTEMPT, user.getUserName()));
+						result = AppConstant.SHOP_EXCEEDED_LOGIN_ATTEMPT;
+					} else {
+						boolean matched = SCryptUtil.check(user.getPassword(), availableUser.getPassword());
+						if(!matched){
+							logger.debug(MessageFormat.format(AppConstant.SHOP_USER_PASSWORD_MISMATCH, user.getUserName()));
+							result = AppConstant.SHOP_UNSUCCESSFUL_LOGIN;
+							
+							//add to total login again
+							if(availableUser.getTryCounter() < 4){
+								availableUser.setTryCounter(availableUser.getTryCounter()+1);
+							}
+							userDaoImpl.save(availableUser);
+						}
 					}
 				}
 			} else {

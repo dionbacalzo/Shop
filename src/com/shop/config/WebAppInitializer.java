@@ -27,6 +27,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
         dynamic.addMapping("/");  
         dynamic.setLoadOnStartup(1);
         
+        //file upload configuration
         MultipartConfigElement multipartConfigElement = new MultipartConfigElement(TMP_FOLDER, 
                 MAX_UPLOAD_SIZE, MAX_UPLOAD_SIZE * 2, MAX_UPLOAD_SIZE / 2);
                
