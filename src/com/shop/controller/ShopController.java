@@ -13,6 +13,8 @@ import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,6 +46,56 @@ public class ShopController {
 	
 	@Autowired @Qualifier("loginManagerImpl")	
 	private LoginManager loginManagerImpl;
+
+	@RequestMapping(value = "")
+	protected ModelAndView viewHomePage() throws Exception {
+		logger.debug(AppConstant.METHOD_IN);
+		
+		ModelAndView model = new ModelAndView("content");
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		return model;
+	}
+	
+	@RequestMapping(value = "/content")
+	protected ModelAndView viewContentPage() throws Exception {
+		logger.debug(AppConstant.METHOD_IN);
+
+		ModelAndView model = new ModelAndView("content");
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		return model;
+	}
+	
+	@RequestMapping(value = "/upload")
+	protected ModelAndView viewUploadPage() throws Exception {
+		logger.debug(AppConstant.METHOD_IN);
+
+		ModelAndView model = new ModelAndView("upload");
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		return model;
+	}
+	
+	@RequestMapping(value = "login")
+	protected ModelAndView viewLoginPage() throws Exception {
+		logger.debug(AppConstant.METHOD_IN);
+		
+		ModelAndView model = new ModelAndView("login");
+		
+		//redirect if already logged in
+		if(SecurityContextHolder.getContext().getAuthentication() != null) {
+			for(GrantedAuthority auth : SecurityContextHolder.getContext().getAuthentication().getAuthorities()){
+				if(!auth.getAuthority().trim().equals("ROLE_ANONYMOUS")){
+					model = new ModelAndView("content");
+					break;
+				}
+			}
+		}
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		return model;
+	}
 	
 	@RequestMapping(value = "/viewList")
 	public String viewList() {
@@ -123,35 +175,7 @@ public class ShopController {
 		return new ResponseEntity<ShopContentPage> (shopContentPage, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "")
-	protected ModelAndView viewHomePage() throws Exception {
-		logger.debug(AppConstant.METHOD_IN);
-		
-		ModelAndView model = new ModelAndView("content");
-		
-		logger.debug(AppConstant.METHOD_OUT);
-		return model;
-	}
 	
-	@RequestMapping(value = "/content")
-	protected ModelAndView viewContentPage() throws Exception {
-		logger.debug(AppConstant.METHOD_IN);
-		
-		ModelAndView model = new ModelAndView("content");
-		
-		logger.debug(AppConstant.METHOD_OUT);
-		return model;
-	}
-	
-	@RequestMapping(value = "/upload")
-	protected ModelAndView viewUploadPage() throws Exception {
-		logger.debug(AppConstant.METHOD_IN);
-		
-		ModelAndView model = new ModelAndView("upload");
-		
-		logger.debug(AppConstant.METHOD_OUT);
-		return model;
-	}
 	
 	@RequestMapping(value = "/viewListUnparsed")
 	public String viewListRaw() {
@@ -220,16 +244,6 @@ public class ShopController {
 		return message;
 	}
 	
-	@RequestMapping(value = "login")
-	protected ModelAndView viewLoginPage() throws Exception {
-		logger.debug(AppConstant.METHOD_IN);
-		
-		ModelAndView model = new ModelAndView("login");
-		
-		logger.debug(AppConstant.METHOD_OUT);
-		return model;
-	}
-	
 	@RequestMapping(value = "loginUser")
 	protected String login( @RequestBody User user) throws Exception {
 		logger.debug(AppConstant.METHOD_IN);
@@ -243,7 +257,7 @@ public class ShopController {
 		}
 		
 		logger.debug(AppConstant.METHOD_OUT);
-		
+
 		return result;
 	}
 	

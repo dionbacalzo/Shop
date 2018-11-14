@@ -4,17 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
@@ -25,11 +24,12 @@ import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
 
 @Configuration 
-@ComponentScan("com.shop") 
+@ComponentScan(basePackages = {"com.shop.controller", "com.shop.service"})
 @EnableWebMvc
 @EnableSpringDataWebSupport
 @PropertySource(value= "classpath:/mongo.properties")
 @EnableMongoRepositories(basePackages = "com.shop.dao")
+@Import({ SecurityConfig.class })
 public class AppConfig extends AbstractMongoConfiguration implements WebMvcConfigurer {
 
 	@Autowired

@@ -68,8 +68,8 @@
 						<div class="col-2">Role</div>
 						<div class="col-10">
 							<select name="role">
-								<option value="basic">basic</option>
-								<option value="privileged">privileged</option>
+								<option value="USER">Basic</option>
+								<option value="ADMIN">Admin</option>
 							</select>
 						</div>
 					</div>

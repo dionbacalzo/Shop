@@ -72,6 +72,7 @@ function initializeLoginForm() {
 					} else {
 						$loginResult.addClass(successCss);
 						$loginResult.text(data);
+						document.location.href = contextPath; //value found at defaultLayout.jsp
 					}
 				},
 				error : function(data) {
