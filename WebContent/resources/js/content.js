@@ -228,7 +228,12 @@ function loadDoc() {
 		}
 	};
 	// change domain and port on local settings
-	xhttp.open("GET", "http://localhost:8080/shop/viewList", true); 
+	// contextPath value found at defaultLayout.jsp
+	if(contextPath) {
+		xhttp.open("GET", contextPath+"/viewList", true);
+	} else {
+		xhttp.open("GET", "http://localhost:8080/shop/viewList", true); 
+	}
 	xhttp.send();
 }
 loadDoc();
