@@ -19,13 +19,19 @@
 					<div class="col-12">
 						<div class="col-2">User Name</div>
 						<div class="col-10">
-							<input type="text" name="userName" />
+							<input type="text" name="username" />
 						</div>
 					</div>
 					<div class="col-12">
 						<div class="col-2">Password</div>
 						<div class="col-10">
 							<input type="password" name="password" />
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="col-3">Remember Me:</div>
+						<div class="col-9">
+							<input type="checkbox" name="rememberMe" />
 						</div>
 					</div>
 					<div class="col-12">

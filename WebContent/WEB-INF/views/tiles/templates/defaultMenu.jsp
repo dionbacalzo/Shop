@@ -16,7 +16,7 @@
 				<ul>
 					<li><a id="menu-home" href="content">Home</a></li>
 					<li><a id="menu-upload" href="upload">Upload</a></li>
-					Hello, <security:authentication property="principal" />
+					Hello, <security:authentication property="principal.username" />
 					<form name="logoutForm" method="post" action="${pageContext.request.contextPath}/logout">
 						<input name="logout" type="submit" value="logout">
 					</form>

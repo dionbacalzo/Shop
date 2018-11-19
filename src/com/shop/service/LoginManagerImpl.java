@@ -15,6 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,7 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 	
 	private static boolean validateInput(User user){
 		boolean valid = true;
-		if(user.getUserName() == null || user.getUserName().trim().isEmpty()){
+		if(user.getUsername() == null || user.getUsername().trim().isEmpty()){
 			valid = false;
 		}
 		if(user.getPassword() == null || user.getPassword().trim().isEmpty()){
@@ -71,6 +72,7 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 			if(validateInput(user)){
 				result = storeUser(user);
 			} else {
+				logger.debug(AppConstant.SHOP_UNSUCCESSFUL_LOGIN + user.getUsername());
 				result = AppConstant.SHOP_UNSUCCESSFUL_LOGIN;
 			}
 		} catch(Exception e){
@@ -86,7 +88,7 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 		String result = AppConstant.SHOP_SUCCESSFUL_LOGIN;
 		try {
 			UsernamePasswordAuthenticationToken authReq =
-		            new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
+		            new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
 	        
 			Authentication auth = authenticate(authReq);
 	        
@@ -98,6 +100,9 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 		logger.debug(AppConstant.METHOD_OUT);
 		return result;
 	}
+	
+	@Autowired
+    private UserDetailsService userDetailsService;
 
 	@Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
@@ -106,8 +111,8 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 		
 		String username = auth.getName();
         String password = auth.getCredentials().toString();
-        
-		UserDomainObject availableUser = userDaoImpl.findByUserName(username);
+
+        UserDomainObject availableUser = userDaoImpl.findByUserName(username);
 		if(availableUser == null){
 			result = AppConstant.SHOP_UNSUCCESSFUL_LOGIN;
 			logger.debug(MessageFormat.format(AppConstant.SHOP_USER_NOT_FOUND, username));
@@ -134,7 +139,7 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 			//get role
 			Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
             grantedAuthorities.add(new SimpleGrantedAuthority(availableUser.getRole()));
-	        authToken = new UsernamePasswordAuthenticationToken(username, password, grantedAuthorities);
+	        authToken = new UsernamePasswordAuthenticationToken(userDetailsService.loadUserByUsername(username), password, grantedAuthorities);
 		} else {
 			throw new BadCredentialsException(AppConstant.SHOP_UNSUCCESSFUL_LOGIN);
 		}

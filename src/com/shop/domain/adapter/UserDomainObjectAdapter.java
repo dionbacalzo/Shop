@@ -8,7 +8,7 @@ public class UserDomainObjectAdapter extends UserDomainObject {
 
 	public static UserDomainObject parseUser(User user){
 		UserDomainObject userDomainObject = new UserDomainObject();
-		userDomainObject.setUserName(user.getUserName());
+		userDomainObject.setUserName(user.getUsername());
 		userDomainObject.setPassword(SCryptUtil.scrypt(user.getPassword(), 16, 16, 16));
 		userDomainObject.setRole(user.getRole());
 		userDomainObject.setTryCounter(0);

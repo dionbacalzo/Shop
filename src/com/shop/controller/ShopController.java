@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +36,7 @@ import com.shop.dto.InventoryItem;
 import com.shop.dto.Item;
 import com.shop.dto.ShopContentPage;
 import com.shop.dto.User;
+import com.shop.dto.adapter.UserAdapter;
 import com.shop.service.LoginManager;
 import com.shop.service.ProductManager;
 
@@ -39,13 +44,16 @@ import com.shop.service.ProductManager;
 @RestController
 public class ShopController {
 	
-	protected final Logger logger = Logger.getLogger(getClass());
+	private final Logger logger = Logger.getLogger(getClass());
 	
 	@Autowired @Qualifier("productManagerImpl")	
 	private ProductManager productManagerImpl;
 	
 	@Autowired @Qualifier("loginManagerImpl")	
 	private LoginManager loginManagerImpl;
+	
+	@Autowired
+	private RememberMeServices rememberMeServices;
 
 	@RequestMapping(value = "")
 	protected ModelAndView viewHomePage() throws Exception {
@@ -245,19 +253,33 @@ public class ShopController {
 	}
 	
 	@RequestMapping(value = "loginUser")
-	protected String login( @RequestBody User user) throws Exception {
+	protected String login(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.debug(AppConstant.METHOD_IN);
-		
 		String result = null;
 		try {
+			User user = new UserAdapter(request);
 			result = loginManagerImpl.login(user);
+			if (user.getRememberMe() != null && user.getRememberMe().equalsIgnoreCase("on")){
+				if(SecurityContextHolder.getContext().getAuthentication() != null) {
+					boolean canSaveRememberMe = false;
+					for(GrantedAuthority auth : SecurityContextHolder.getContext().getAuthentication().getAuthorities()){
+						if(!auth.getAuthority().trim().equals("ROLE_ANONYMOUS")){
+							canSaveRememberMe = true;
+							break;
+						}
+					}
+					if(canSaveRememberMe) {
+						rememberMeServices.loginSuccess(request, response, SecurityContextHolder.getContext().getAuthentication());
+					}
+				}
+			}
 		} catch (Exception e){
 			result = AppConstant.SHOP_UNSUCCESSFUL_LOGIN;
 			logger.error(e.getMessage());
 		}
 		
 		logger.debug(AppConstant.METHOD_OUT);
-
+		
 		return result;
 	}
 	

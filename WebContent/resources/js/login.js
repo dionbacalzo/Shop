@@ -57,8 +57,9 @@ function initializeLoginForm() {
 			$.ajax({
 				url :  $loginForm.attr("action"),
 				type : "POST",
-				data : JSON.stringify(formData),
-				contentType : "application/json; charset=utf-8",
+				data : $loginForm.serializeArray(),
+				//data : JSON.stringify(formData),
+				//contentType : "application/json; charset=utf-8",
 				beforeSend : function() {
 					$loader.show();
 				},

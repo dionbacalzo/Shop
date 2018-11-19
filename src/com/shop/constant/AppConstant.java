@@ -1,5 +1,7 @@
 package com.shop.constant;
 
+import com.shop.util.PropertyUtil;
+
 public class AppConstant {
 	public static final String PROPERTY_FILE = "shop.properties";
 	
@@ -39,6 +41,8 @@ public class AppConstant {
 	
 	public static final String SHOP_UNSUCCESSFUL_LOGIN = "unable to login";
 	
+	public static final String SHOP_INVALID_LOGIN_CONTENT = "unable to login due to invalid content";
+	
 	public static final String SHOP_SUCCESSFUL_LOGIN = "successfully logged in";
 
 	public static final String SHOP_UNSUCCESSFUL_SIGNUP = "unable to signup";
@@ -52,4 +56,8 @@ public class AppConstant {
 	public static final String SHOP_USER_EXCEEDED_LOGIN_ATTEMPT = "user {0} has exceeded login attempt";
 
 	public static final String SHOP_EXCEEDED_LOGIN_ATTEMPT = "exceeded login attempt";
+	
+	public static final String REMEMBER_ME_KEY = PropertyUtil.getProperty("remember.me.key");
+	
+	public static final int SESSION_TIMEOUT = Integer.parseInt(PropertyUtil.getProperty("session.timeout.minute"))*60; 
 }
