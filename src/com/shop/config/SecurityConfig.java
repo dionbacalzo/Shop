@@ -1,6 +1,7 @@
 package com.shop.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -12,11 +13,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import com.shop.constant.AppConstant;
 import com.shop.security.RestAuthenticationEntryPoint;
 import com.shop.security.ShopAccessDeniedHandler;
 import com.shop.security.ShopAuthenticationSuccessHandler;
+import com.shop.security.ShopLogoutSuccessHandler;
 import com.shop.service.LoginManagerImpl;
 
 @Configuration
@@ -58,10 +61,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
            .antMatchers("/resources/**");
     }
     
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new ShopLogoutSuccessHandler();
+    }
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	http.csrf().disable()
-        .authorizeRequests()
+        .cors()
         .and()
         .exceptionHandling()
 	        .accessDeniedHandler(accessDeniedHandler)
@@ -81,6 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .httpBasic()
         .and()
         .logout()
+        	.logoutSuccessHandler(logoutSuccessHandler())
 	        .logoutUrl("/logout")
 	        .invalidateHttpSession(true)
 	        .deleteCookies("JSESSIONID")

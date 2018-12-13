@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,7 +41,7 @@ import com.shop.dto.adapter.UserAdapter;
 import com.shop.service.LoginManager;
 import com.shop.service.ProductManager;
 
-@CrossOrigin //allow CORS for local testing
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true") //allow CORS for angular
 @RestController
 public class ShopController {
 	
@@ -252,14 +253,14 @@ public class ShopController {
 		return message;
 	}
 	
-	@RequestMapping(value = "loginUser")
+	@RequestMapping(produces = MediaType.TEXT_PLAIN_VALUE, value = "loginUser")
 	protected String login(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.debug(AppConstant.METHOD_IN);
 		String result = null;
 		try {
 			User user = new UserAdapter(request);
 			result = loginManagerImpl.login(user);
-			if (user.getRememberMe() != null && user.getRememberMe().equalsIgnoreCase("on")){
+			if (user.getRememberMe() != null && (user.getRememberMe().equalsIgnoreCase("on") || user.getRememberMe().equalsIgnoreCase("true"))){
 				if(SecurityContextHolder.getContext().getAuthentication() != null) {
 					boolean canSaveRememberMe = false;
 					for(GrantedAuthority auth : SecurityContextHolder.getContext().getAuthentication().getAuthorities()){
@@ -281,6 +282,27 @@ public class ShopController {
 		logger.debug(AppConstant.METHOD_OUT);
 		
 		return result;
+	}
+	
+	@RequestMapping(value = "isAuthenticated")
+	private boolean isAuthenticated() {
+		boolean isAuthenticated = false;
+		logger.debug(AppConstant.METHOD_IN);
+		
+		if(SecurityContextHolder.getContext().getAuthentication() != null) {
+			for(GrantedAuthority auth : SecurityContextHolder.getContext().getAuthentication().getAuthorities()){
+				if(!auth.getAuthority().trim().equals("ROLE_ANONYMOUS")){
+					isAuthenticated = true;
+					break;
+				}
+			}
+		}
+		
+		logger.debug("user " + SecurityContextHolder.getContext().getAuthentication().getName() + " authentication is set to"
+				+ " " + isAuthenticated);
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		return isAuthenticated;
 	}
 	
 	@RequestMapping(value = "signupUser")

@@ -2,7 +2,6 @@
  * this javascript file will run through all pages on every first page load
  */
 
-// TODO: add active css to the current menu item chosen 
 if(document.title == "Shop Display: Home") {
 	$menuHome = $("#menu-home");
 	$menuHome.removeAttr("href");
