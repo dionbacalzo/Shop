@@ -71,7 +71,10 @@ public class ProductManagerImpl implements ProductManager {
 			logger.error("Duplicate item " + e.getMessage());
 	    } catch (MongoException e) {
 	    	logger.error(e.getMessage());
-	    };
+	    } catch (ShopException e) {
+	    	logger.error(e.getMessage());
+	    	throw e;
+		};
 		
 		logger.debug(AppConstant.METHOD_OUT);
 		return ShopItemAdapter.parseItemRaw(newList);		
@@ -87,7 +90,10 @@ public class ProductManagerImpl implements ProductManager {
 			logger.error("Duplicate item " + e.getMessage());
 	    } catch (MongoException e) {
 	    	logger.error(e.getMessage());
-	    };
+	    } catch (ShopException e) {
+	    	logger.error(e.getMessage());
+	    	throw e;
+		};
 		
 		logger.debug(AppConstant.METHOD_OUT);
 		return itemList;		

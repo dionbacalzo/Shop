@@ -192,6 +192,7 @@ public class ShopItemAdapter {
 						product.setPrice(item.getPrice());
 						
 						//get matching format date
+						//mongodb currently only supports java.util.Date so we cannot use the Java 8 time features
 						String formatDate = DateUtil.DEFAULT_DATETIME_FORMAT;
 						if(DateUtil.isThisDateValid(item.getReleaseDate(), DateUtil.DEFAULT_DATETIME_FORMAT)){
 							formatDate = DateUtil.DEFAULT_DATETIME_FORMAT;
@@ -199,6 +200,8 @@ public class ShopItemAdapter {
 							formatDate = DateUtil.DATE_PATTERN_1;
 						} else if(DateUtil.isThisDateValid(item.getReleaseDate(), DateUtil.MONGODB_DATETIME_FORMAT)){
 							formatDate = DateUtil.MONGODB_DATETIME_FORMAT;
+						} else if(DateUtil.isThisDateValid(item.getReleaseDate(), DateUtil.ISO_8601_FORMAT)) {
+							formatDate = DateUtil.ISO_8601_FORMAT;
 						}
 						
 						product.setReleaseDate(DateUtil.getDate(item.getReleaseDate(), formatDate));
@@ -215,6 +218,7 @@ public class ShopItemAdapter {
 					} catch (JsonProcessingException ex) {
 						logger.error(AppConstant.PARSE_ITEM_ERROR);
 					}
+					throw e;
 				}
 			});
 		} else {

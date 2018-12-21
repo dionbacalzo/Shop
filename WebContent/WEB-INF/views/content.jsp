@@ -9,7 +9,7 @@
 <title>Shop Display: Home</title>
 </head>
 <body>
-	<div id="content"></div>
+	<div id="content" class="col-12"></div>
 
 	<script src="resources/js/content.js"></script>
 </body>

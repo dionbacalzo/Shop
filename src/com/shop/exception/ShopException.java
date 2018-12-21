@@ -4,7 +4,7 @@ package com.shop.exception;
  * Business Level Errors
  *
  */
-public class ShopException extends Exception {
+public class ShopException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 

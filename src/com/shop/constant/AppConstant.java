@@ -39,15 +39,13 @@ public class AppConstant {
 
 	public static final String SHOP_ITEM_DELETE_NOT_FOUND = "Unable to delete: {0} not found";
 	
-	public static final String SHOP_UNSUCCESSFUL_LOGIN = "unable to login";
+	public static final String SHOP_UNSUCCESSFUL_LOGIN = "FAIL";
 	
-	public static final String SHOP_INVALID_LOGIN_CONTENT = "unable to login due to invalid content";
-	
-	public static final String SHOP_SUCCESSFUL_LOGIN = "successfully logged in";
+	public static final String SHOP_SUCCESSFUL_LOGIN = "SUCCESS";
 
-	public static final String SHOP_UNSUCCESSFUL_SIGNUP = "unable to signup";
+	public static final String SHOP_UNSUCCESSFUL_SIGNUP = "FAIL";
 	
-	public static final String SHOP_SUCCESSFUL_SIGNUP = "successfully signed up";
+	public static final String SHOP_SUCCESSFUL_SIGNUP = "SUCCESS";
 
 	public static final String SHOP_USER_NOT_FOUND = "user {0} not found";
 
