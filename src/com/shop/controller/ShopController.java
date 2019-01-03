@@ -17,6 +17,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.RememberMeServices;
@@ -289,13 +290,12 @@ public class ShopController {
 		boolean isAuthenticated = false;
 		logger.debug(AppConstant.METHOD_IN);
 		
-		if(SecurityContextHolder.getContext().getAuthentication() != null) {
-			for(GrantedAuthority auth : SecurityContextHolder.getContext().getAuthentication().getAuthorities()){
-				if(!auth.getAuthority().trim().equals("ROLE_ANONYMOUS")){
-					isAuthenticated = true;
-					break;
-				}
-			}
+		if(SecurityContextHolder.getContext().getAuthentication() != null &&
+				 SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&
+				 //when Anonymous Authentication is enabled
+				 !(SecurityContextHolder.getContext().getAuthentication() 
+				          instanceof AnonymousAuthenticationToken) ) {			
+					isAuthenticated = true;			
 		}
 		
 		logger.debug("user " + SecurityContextHolder.getContext().getAuthentication().getName() + " authentication is set to"
