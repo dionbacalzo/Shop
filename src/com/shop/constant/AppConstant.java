@@ -57,5 +57,8 @@ public class AppConstant {
 	
 	public static final String REMEMBER_ME_KEY = PropertyUtil.getProperty("remember.me.key");
 	
-	public static final int SESSION_TIMEOUT = Integer.parseInt(PropertyUtil.getProperty("session.timeout.minute"))*60; 
+	public static final int SESSION_TIMEOUT = Integer.parseInt(PropertyUtil.getProperty("session.timeout.minute"))*60;
+	
+	// Token is valid for one month
+	public static final int TOKEN_VALIDITY_DAYS = 31;
 }

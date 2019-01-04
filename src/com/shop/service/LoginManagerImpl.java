@@ -1,8 +1,11 @@
 package com.shop.service;
 
 import java.text.MessageFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -16,12 +19,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.lambdaworks.crypto.SCryptUtil;
 import com.shop.constant.AppConstant;
+import com.shop.dao.TokenDao;
 import com.shop.dao.UserDao;
+import com.shop.domain.TokenDomainObject;
 import com.shop.domain.UserDomainObject;
 import com.shop.domain.adapter.UserDomainObjectAdapter;
 import com.shop.dto.User;
@@ -34,6 +40,9 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 	
 	@Autowired
 	private UserDao userDaoImpl;
+	
+	@Autowired
+	private TokenDao tokenDao;
 	
 	private static String[] ROLE = {
 			"USER", 
@@ -119,7 +128,7 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 		} else {
 			if(availableUser.getTryCounter() >= 3){
 				logger.debug(MessageFormat.format(AppConstant.SHOP_USER_EXCEEDED_LOGIN_ATTEMPT, username));
-				result = AppConstant.SHOP_EXCEEDED_LOGIN_ATTEMPT;
+				result = AppConstant.SHOP_UNSUCCESSFUL_LOGIN;
 			} else {
 				boolean matched = SCryptUtil.check(password, availableUser.getPassword());
 				if(!matched){
@@ -171,6 +180,38 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 		logger.debug(AppConstant.METHOD_OUT);
 		
 		return result;
+	}
+    
+    @Override
+	public boolean allowUserRememberMeToken(User user) {
+    	boolean allowtoken = false;
+		logger.debug(AppConstant.METHOD_IN);
+		
+		List<TokenDomainObject> tokenList = tokenDao.findByUserLogin(user.getUsername());
+		
+		if(tokenList == null || (tokenList != null && tokenList.size() < 10)) {
+			allowtoken = true;
+			logger.debug(tokenList.size());
+		} else {
+			logger.debug("exceeded remember me tokens for account " + user.getUsername());
+			cleanUserRememberMeToken(tokenList);
+		}
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		return allowtoken;
+    }
+    
+	public void cleanUserRememberMeToken(List<TokenDomainObject> tokenList) {
+		logger.debug(AppConstant.METHOD_IN);
+
+		for (TokenDomainObject token : tokenList) {
+			if (token.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+					.plusDays(AppConstant.TOKEN_VALIDITY_DAYS).isBefore(LocalDateTime.now())) {
+				tokenDao.deleteById(token.get_id().toString());
+			}
+		}
+
+		logger.debug(AppConstant.METHOD_OUT);
 	}
 
 }

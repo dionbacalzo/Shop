@@ -261,7 +261,8 @@ public class ShopController {
 		try {
 			User user = new UserAdapter(request);
 			result = loginManagerImpl.login(user);
-			if (user.getRememberMe() != null && (user.getRememberMe().equalsIgnoreCase("on") || user.getRememberMe().equalsIgnoreCase("true"))){
+			if (!result.equals(AppConstant.SHOP_UNSUCCESSFUL_LOGIN) && user.getRememberMe() != null && 
+					(user.getRememberMe().equalsIgnoreCase("on") || user.getRememberMe().equalsIgnoreCase("true"))){
 				if(SecurityContextHolder.getContext().getAuthentication() != null) {
 					boolean canSaveRememberMe = false;
 					for(GrantedAuthority auth : SecurityContextHolder.getContext().getAuthentication().getAuthorities()){
@@ -270,7 +271,7 @@ public class ShopController {
 							break;
 						}
 					}
-					if(canSaveRememberMe) {
+					if(canSaveRememberMe && loginManagerImpl.allowUserRememberMeToken(user)) {
 						rememberMeServices.loginSuccess(request, response, SecurityContextHolder.getContext().getAuthentication());
 					}
 				}

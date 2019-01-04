@@ -34,10 +34,8 @@ public class RememberMeServicesImpl extends AbstractRememberMeServices  {
 	
 	private final Logger logger = Logger.getLogger(getClass());
 	
-	// Token is valid for one month
-    private static final int TOKEN_VALIDITY_DAYS = 31;
 
-    private static final int TOKEN_VALIDITY_SECONDS = 60 * 60 * 24 * TOKEN_VALIDITY_DAYS;
+    private static final int TOKEN_VALIDITY_SECONDS = 60 * 60 * 24 * AppConstant.TOKEN_VALIDITY_DAYS;
 
 	private static final int DEFAULT_TOKEN_LENGTH = 16;
 	
@@ -130,7 +128,7 @@ public class RememberMeServicesImpl extends AbstractRememberMeServices  {
 	        }
 	        
 	        if (token.getDate().toInstant().atZone(ZoneId.systemDefault())
-	        	      .toLocalDateTime().plusDays(TOKEN_VALIDITY_DAYS).isBefore(LocalDateTime.now())) {
+	        	      .toLocalDateTime().plusDays(AppConstant.TOKEN_VALIDITY_DAYS).isBefore(LocalDateTime.now())) {
 	        	tokenDao.deleteById(token.get_id().toString());
 	            throw new RememberMeAuthenticationException("Remember-me login has expired");
 	        }

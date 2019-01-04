@@ -10,4 +10,7 @@ public interface LoginManager {
 	public String login(User user);
 
 	public String signup(User user);
+
+	public boolean allowUserRememberMeToken(User user);
+
 }
