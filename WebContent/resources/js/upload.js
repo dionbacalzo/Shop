@@ -150,8 +150,10 @@ function initializeDelete($element){
 	$element.parents('tr').detach();
 }
 
-function initializeEdit($element, field){
-	$element.on('input', function(){
+
+
+function initializeEdit($element, field){	
+	$element.on('input',function(){
 		$this = $(this);
 		var inputCounterpart = $element.parents('tr').find("input[name$=\""+ field +"\"]")[0]
 		inputCounterpart.setAttribute("value", $this[0].textContent.trim());
@@ -159,14 +161,14 @@ function initializeEdit($element, field){
 }
 
 function initializeContentTable() {
-	
 	//initialize edit
 	$("#uploadItemTable td").each(function(index, element) {
 		$(element).each(function(i, cell) {
-			if(cell.className.indexOf("itemAttr-")){
-				var field = cell.className.replace('itemAttr-','');
+			if(cell.className.includes("itemAttr-")){
+				var field = cell.className.replace('itemAttr-','');				
 				initializeEdit($(cell), field)
 			}
+
 		});
 	});
 	
