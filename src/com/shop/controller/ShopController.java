@@ -41,6 +41,7 @@ import com.shop.dto.User;
 import com.shop.dto.adapter.UserAdapter;
 import com.shop.service.LoginManager;
 import com.shop.service.ProductManager;
+import com.shop.service.UserManager;
 
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true") //allow CORS for angular
 @RestController
@@ -53,6 +54,9 @@ public class ShopController {
 	
 	@Autowired @Qualifier("loginManagerImpl")	
 	private LoginManager loginManagerImpl;
+	
+	@Autowired @Qualifier("userManagerImpl")	
+	private UserManager userManagerImpl;
 	
 	@Autowired
 	private RememberMeServices rememberMeServices;
@@ -82,6 +86,16 @@ public class ShopController {
 		logger.debug(AppConstant.METHOD_IN);
 
 		ModelAndView model = new ModelAndView("upload");
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		return model;
+	}
+	
+	@RequestMapping(value = "/admin")
+	protected ModelAndView viewAdminPage() throws Exception {
+		logger.debug(AppConstant.METHOD_IN);
+
+		ModelAndView model = new ModelAndView("admin");
 		
 		logger.debug(AppConstant.METHOD_OUT);
 		return model;
@@ -321,5 +335,53 @@ public class ShopController {
 		logger.debug(AppConstant.METHOD_OUT);
 		
 		return result;
+	}
+	
+	/**
+	 * returns a list of accounts that has exceeded the maximum number of login attempts
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "accountResetList")
+	protected String accountResetList() throws Exception {
+		logger.debug(AppConstant.METHOD_IN);
+		
+		String json = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			Map<String, Object> items = new HashMap<String, Object>();
+			items.put("users", userManagerImpl.getAccountsToReset());
+			json = mapper.writeValueAsString(items);
+		} catch (JsonProcessingException e) {
+			logger.error(e);
+		}
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		
+		return json;
+	}
+	
+	/**
+	 * resets accounts that has exceeded the maximum number of login attempts
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "resetAccount")
+	protected String resetAccount(@RequestBody List<User> userList) throws Exception {
+		logger.debug(AppConstant.METHOD_IN);
+		
+		String json = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			Map<String, Object> items = new HashMap<String, Object>();
+			items.put("users", userManagerImpl.resetAccounts(userList));
+			json = mapper.writeValueAsString(items);
+		} catch (JsonProcessingException e) {
+			logger.error(e);
+		}
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		
+		return json;
 	}
 }

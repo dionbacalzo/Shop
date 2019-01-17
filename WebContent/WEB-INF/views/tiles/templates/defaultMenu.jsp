@@ -11,11 +11,15 @@
 <body>
 	<div id="main-navbar" class="col-12">
 		<security:authorize access="isAuthenticated()" var="isLoggedIn" />
+		
 		<c:choose>
 			<c:when test="${isLoggedIn}">
 				<ul>
 					<li><a id="menu-home" href="content">Home</a></li>
 					<li><a id="menu-upload" href="upload">Upload</a></li>
+					<security:authorize access="hasAuthority('ADMIN')">
+						<li><a id="menu-admin" href="admin">Admin</a></li>
+					</security:authorize>
 					Hello, <security:authentication property="principal.username" />
 					<form name="logoutForm" method="post" action="${pageContext.request.contextPath}/logout">
 						<input name="logout" type="submit" value="logout">

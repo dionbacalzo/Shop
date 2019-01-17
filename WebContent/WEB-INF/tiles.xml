@@ -22,6 +22,12 @@
    <definition name="login" extends="template-def">  
        <put-attribute name="title" value="Shop Display: Login" />  
        <put-attribute name="body" value="/WEB-INF/views/login.jsp" />  
+   </definition>
+   
+   <!-- Login Page -->
+   <definition name="admin" extends="template-def">  
+       <put-attribute name="title" value="Shop Display: Admin" />  
+       <put-attribute name="body" value="/WEB-INF/views/admin.jsp" />  
    </definition>  
        
    <!-- Upload Page -->

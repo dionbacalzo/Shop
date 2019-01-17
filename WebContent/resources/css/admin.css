@@ -1,0 +1,11 @@
+input {
+	margin: 0;
+}
+
+#resetForm { 
+	margin: 15px 0;	
+}
+
+#submitContainer {
+	margin-top: 15px;
+}
