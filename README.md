@@ -17,7 +17,8 @@ Tomcat 9
 	
 Mongodb 
  * Download the [Community server](https://www.mongodb.com/download-center?jmp=nav#community)
- * Follow the steps in setting up the MongoDB Server at *Run MongoDB Community Edition section* of this page: [https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/)	
+ * For a server GUI you can download [the MongoDB Compass](https://www.mongodb.com/download-center/compass?jmp=hero). Select the Community Edition for the free download
+ * If you're having trouble in the configuration, follow the steps in setting up the MongoDB Server at *Run MongoDB Community Edition section* of this page: [https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/)	
  * Create a database named **shop** and a collection named **ItemDomainObject**
 
 ## How to Run
