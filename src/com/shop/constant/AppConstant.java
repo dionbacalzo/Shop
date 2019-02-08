@@ -39,14 +39,20 @@ public class AppConstant {
 
 	public static final String SHOP_ITEM_DELETE_NOT_FOUND = "Unable to delete: {0} not found";
 	
-	public static final String SHOP_UNSUCCESSFUL_LOGIN = "FAIL";
+	public static final String SHOP_LOGIN_UNSUCCESSFUL = "FAIL";
 	
-	public static final String SHOP_SUCCESSFUL_LOGIN = "SUCCESS";
+	public static final String SHOP_LOGIN_SUCCESSFUL = "SUCCESS";
 
-	public static final String SHOP_UNSUCCESSFUL_SIGNUP = "FAIL";
+	public static final String SHOP_SIGNUP_UNSUCCESSFUL = "FAIL";
 	
-	public static final String SHOP_SUCCESSFUL_SIGNUP = "SUCCESS";
+	public static final String SHOP_SIGNUP_SUCCESSFUL = "SUCCESS";
+	
+	public static final String SHOP_SIGNUP_INVALID_CREDENTIALS = "Signup credentials are invalid";
+	
+	public static final String SHOP_SIGNUP_STORE_UNSUCCESSFUL = "Unable to store user";
 
+	public static final String SHOP_SIGNUP_STORE_SUCCESSFUL = "User store successful";
+	
 	public static final String SHOP_USER_NOT_FOUND = "user {0} not found";
 
 	public static final String SHOP_USER_PASSWORD_MISMATCH = "password does not match for user {0}";

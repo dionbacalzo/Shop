@@ -275,7 +275,7 @@ public class ShopController {
 		try {
 			User user = new UserAdapter(request);
 			result = loginManagerImpl.login(user);
-			if (!result.equals(AppConstant.SHOP_UNSUCCESSFUL_LOGIN) && user.getRememberMe() != null && 
+			if (!result.equals(AppConstant.SHOP_LOGIN_UNSUCCESSFUL) && user.getRememberMe() != null && 
 					(user.getRememberMe().equalsIgnoreCase("on") || user.getRememberMe().equalsIgnoreCase("true"))){
 				if(SecurityContextHolder.getContext().getAuthentication() != null) {
 					boolean canSaveRememberMe = false;
@@ -291,7 +291,7 @@ public class ShopController {
 				}
 			}
 		} catch (Exception e){
-			result = AppConstant.SHOP_UNSUCCESSFUL_LOGIN;
+			result = AppConstant.SHOP_LOGIN_UNSUCCESSFUL;
 			logger.error(e.getMessage());
 		}
 		
@@ -328,7 +328,7 @@ public class ShopController {
 		try {
 			result = loginManagerImpl.signup(user);
 		} catch (Exception e){
-			result = AppConstant.SHOP_UNSUCCESSFUL_SIGNUP;
+			result = AppConstant.SHOP_SIGNUP_UNSUCCESSFUL;
 			logger.error(e.getMessage());
 		}
 		

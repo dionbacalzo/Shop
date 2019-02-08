@@ -60,7 +60,7 @@
 					<div class="col-12">
 						<div class="col-2">User Name</div>
 						<div class="col-10">
-							<input type="text" name="userName" />
+							<input type="text" name="username" />
 						</div>
 					</div>
 					<div class="col-12">

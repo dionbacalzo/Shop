@@ -1,5 +1,7 @@
 package com.shop.config;
 
+import java.io.File;
+
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;  
 import javax.servlet.ServletException;  
@@ -27,6 +29,9 @@ public class WebAppInitializer implements WebApplicationInitializer {
         Dynamic dynamic = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
         dynamic.addMapping("/");  
         dynamic.setLoadOnStartup(1);
+        
+        //create directory if it doesn't exist 
+        new File(TMP_FOLDER).mkdirs();
         
         //file upload configuration
         MultipartConfigElement multipartConfigElement = new MultipartConfigElement(TMP_FOLDER, 
