@@ -39,13 +39,23 @@ public class AppConstant {
 
 	public static final String SHOP_ITEM_DELETE_NOT_FOUND = "Unable to delete: {0} not found";
 	
-	public static final String SHOP_LOGIN_UNSUCCESSFUL = "FAIL";
+	public static final String SHOP_LOGIN_UNSUCCESSFUL_STATUS = "FAIL";
 	
-	public static final String SHOP_LOGIN_SUCCESSFUL = "SUCCESS";
+	public static final String SHOP_LOGIN_SUCCESSFUL_STATUS = "SUCCESS";
+	
+	public static final String SHOP_LOGIN_SUCCESSFUL_MESSAGE = "You have successfully logged in";
+	
+	public static final String SHOP_LOGIN_UNSUCCESSFUL_MESSAGE_GENERIC = "Unable to Login";
+	
+	public static final String SHOP_LOGIN_UNSUCCESSFUL_MESSAGE_LIMIT = "Account Locked. Reached the maximum number of login attempts. Contact an Admin to unlock";
 
-	public static final String SHOP_SIGNUP_UNSUCCESSFUL = "FAIL";
+	public static final String SHOP_SIGNUP_UNSUCCESSFUL_STATUS = "FAIL";
 	
-	public static final String SHOP_SIGNUP_SUCCESSFUL = "SUCCESS";
+	public static final String SHOP_SIGNUP_SUCCESSFUL_STATUS = "SUCCESS";
+	
+	public static final String SHOP_SIGNUP_SUCCESSFUL_MESSAGE = "You have successfully signed up";
+	
+	public static final String SHOP_SIGNUP_UNSUCCESSFUL_MESSAGE_GENERIC = "Unable to Sign up";
 	
 	public static final String SHOP_SIGNUP_INVALID_CREDENTIALS = "Signup credentials are invalid";
 	

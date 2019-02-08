@@ -67,12 +67,13 @@ function initializeLoginForm() {
 					$loader.hide();
 				},
 				success : function(data) {
-					if(data.toUpperCase() === "FAIL".toUpperCase()){
+					data = JSON.parse(data);
+					if(data.status.toUpperCase() === "FAIL".toUpperCase()){
 						$loginResult.addClass(warningCss);
-						$loginResult.text("Unable to log in");
+						$loginResult.text(data.message);
 					} else {
 						$loginResult.addClass(successCss);
-						$loginResult.text("Successfully logged in");
+						$loginResult.text(data.message);
 						document.location.href = contextPath; //value found at defaultLayout.jsp
 					}
 				},
@@ -113,12 +114,13 @@ function initializeSignupForm() {
 					$loader.hide();
 				},
 				success : function(data) {
-					if(data.toUpperCase() === "FAIL".toUpperCase()){
+					data = JSON.parse(data);
+					if(data.status.toUpperCase() === "FAIL".toUpperCase()){
 						$signupResult.addClass(warningCss);
-						$signupResult.text("Unable to signup");
+						$signupResult.text(data.message);
 					} else {
 						$signupResult.addClass(successCss);
-						$signupResult.text("Successfully Signed Up");
+						$signupResult.text(data.message);
 					}
 				},
 				error : function(data) {

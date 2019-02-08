@@ -13,7 +13,7 @@ public interface UserDao extends MongoRepository<UserDomainObject, String> {
 	
 	public UserDomainObject findByUserName(String userName);
 	
-	@Query("{ 'tryCounter' : { $gt: ?0 } }")
+	@Query("{ 'tryCounter' : { $gte: ?0 } }")
 	public List<UserDomainObject> findByTryCounter(int tryCounter);
 	
 }

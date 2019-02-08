@@ -11,7 +11,6 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -29,7 +28,9 @@ import com.shop.dao.UserDao;
 import com.shop.domain.TokenDomainObject;
 import com.shop.domain.UserDomainObject;
 import com.shop.domain.adapter.UserDomainObjectAdapter;
+import com.shop.dto.Result;
 import com.shop.dto.User;
+import com.shop.exception.ShopException;
 
 @Service
 @Component("loginManagerImpl")
@@ -73,37 +74,44 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 	}
 	
 	@Override
-	public String login(User user) {
+	public Result login(User user) {
 		logger.debug(AppConstant.METHOD_IN);
-		String result = AppConstant.SHOP_LOGIN_SUCCESSFUL;
+		Result result = new Result(AppConstant.SHOP_LOGIN_SUCCESSFUL_STATUS, AppConstant.SHOP_LOGIN_SUCCESSFUL_MESSAGE);
 		try {
 			if(validateInput(user)){
 				result = storeUser(user);
 			} else {
-				logger.debug(AppConstant.SHOP_LOGIN_UNSUCCESSFUL + user.getUsername());
-				result = AppConstant.SHOP_LOGIN_UNSUCCESSFUL;
+				logger.debug(AppConstant.SHOP_LOGIN_UNSUCCESSFUL_STATUS + user.getUsername());
+				result = new Result(AppConstant.SHOP_LOGIN_UNSUCCESSFUL_STATUS, AppConstant.SHOP_LOGIN_UNSUCCESSFUL_MESSAGE_GENERIC);
 			}
 		} catch(Exception e){
 			logger.error(e.getMessage());
-			result = AppConstant.SHOP_LOGIN_UNSUCCESSFUL;
+			result = new Result(AppConstant.SHOP_LOGIN_UNSUCCESSFUL_STATUS, AppConstant.SHOP_LOGIN_UNSUCCESSFUL_MESSAGE_GENERIC);
 		}
 		logger.debug(AppConstant.METHOD_OUT);
 		return result;
 	}
 	
-	public String storeUser(User user){
+	/**
+	 * Store user to session
+	 * @param user
+	 * @return
+	 */
+	public Result storeUser(User user){
 		logger.debug(AppConstant.METHOD_IN);
-		String result = AppConstant.SHOP_LOGIN_SUCCESSFUL;
+		Result result = new Result(AppConstant.SHOP_LOGIN_SUCCESSFUL_STATUS, AppConstant.SHOP_LOGIN_SUCCESSFUL_MESSAGE);
 		try {
-			UsernamePasswordAuthenticationToken authReq =
-		            new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-	        
+			UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+
 			Authentication auth = authenticate(authReq);
 	        
 	        SecurityContextHolder.getContext().setAuthentication(auth);
+		} catch(ShopException e){
+			logger.error(e.getMessage());
+			result = new Result(AppConstant.SHOP_LOGIN_UNSUCCESSFUL_STATUS, e.getMessage());
 		} catch(Exception e){
 			logger.error(e.getMessage());
-			result = AppConstant.SHOP_LOGIN_UNSUCCESSFUL;
+			result = new Result(AppConstant.SHOP_LOGIN_UNSUCCESSFUL_STATUS, AppConstant.SHOP_LOGIN_UNSUCCESSFUL_MESSAGE_GENERIC);
 		}
 		logger.debug(AppConstant.METHOD_OUT);
 		return result;
@@ -114,7 +122,7 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 
 	@Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
-		String result = AppConstant.SHOP_LOGIN_SUCCESSFUL;
+		Result result = new Result(AppConstant.SHOP_LOGIN_SUCCESSFUL_STATUS, AppConstant.SHOP_LOGIN_SUCCESSFUL_MESSAGE);
 		UsernamePasswordAuthenticationToken authToken = null;
 		
 		String username = auth.getName();
@@ -122,34 +130,38 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 
         UserDomainObject availableUser = userDaoImpl.findByUserName(username);
 		if(availableUser == null){
-			result = AppConstant.SHOP_LOGIN_UNSUCCESSFUL;
+			result = new Result(AppConstant.SHOP_LOGIN_UNSUCCESSFUL_STATUS, AppConstant.SHOP_LOGIN_UNSUCCESSFUL_MESSAGE_GENERIC);
 			logger.debug(MessageFormat.format(AppConstant.SHOP_USER_NOT_FOUND, username));
 		} else {
 			if(availableUser.getTryCounter() >= 3){
 				logger.debug(MessageFormat.format(AppConstant.SHOP_USER_EXCEEDED_LOGIN_ATTEMPT, username));
-				result = AppConstant.SHOP_LOGIN_UNSUCCESSFUL;
+				result = new Result(AppConstant.SHOP_LOGIN_UNSUCCESSFUL_STATUS, AppConstant.SHOP_LOGIN_UNSUCCESSFUL_MESSAGE_LIMIT);
 			} else {
 				boolean matched = SCryptUtil.check(password, availableUser.getPassword());
 				if(!matched){
-					logger.debug(MessageFormat.format(AppConstant.SHOP_USER_PASSWORD_MISMATCH, username));
-					result = AppConstant.SHOP_LOGIN_UNSUCCESSFUL;
-					
 					//add to total login again
 					if(availableUser.getTryCounter() < 4){
 						availableUser.setTryCounter(availableUser.getTryCounter()+1);
 					}
 					userDaoImpl.save(availableUser);
+					logger.debug(MessageFormat.format(AppConstant.SHOP_USER_PASSWORD_MISMATCH, username));
+					result = new Result(AppConstant.SHOP_LOGIN_UNSUCCESSFUL_STATUS, AppConstant.SHOP_LOGIN_UNSUCCESSFUL_MESSAGE_GENERIC);
 				}
 			}
 		}
 		
-		if(result.equalsIgnoreCase(AppConstant.SHOP_LOGIN_SUCCESSFUL)){
+		if(result.getStatus().equalsIgnoreCase(AppConstant.SHOP_LOGIN_SUCCESSFUL_STATUS)){
 			//get role
 			Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
             grantedAuthorities.add(new SimpleGrantedAuthority(availableUser.getRole()));
 	        authToken = new UsernamePasswordAuthenticationToken(userDetailsService.loadUserByUsername(username), password, grantedAuthorities);
+	        //reset counter for a successful login
+	        if(availableUser.getTryCounter() > 0){
+				availableUser.setTryCounter(0);
+			}
+			userDaoImpl.save(availableUser);
 		} else {
-			throw new BadCredentialsException(AppConstant.SHOP_LOGIN_UNSUCCESSFUL);
+			throw new ShopException(result.getMessage());
 		}
 		
         return authToken;
@@ -161,23 +173,28 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
     }
     
     @Override
-	public String signup(User user) {
+	public Result signup(User user) {
 		logger.debug(AppConstant.METHOD_IN);
 		
-		String result = AppConstant.SHOP_SIGNUP_SUCCESSFUL;
-		
+		Result result = new Result(AppConstant.SHOP_SIGNUP_SUCCESSFUL_STATUS, AppConstant.SHOP_SIGNUP_SUCCESSFUL_MESSAGE);
+		UserDomainObject availableUser = null;
 		if(validateSignUpInput(user)){
-			UserDomainObject availableUser = userDaoImpl.insert(UserDomainObjectAdapter.parseUser(user));
+			try {
+				availableUser = userDaoImpl.insert(UserDomainObjectAdapter.parseUser(user));
+			} catch (Exception e) {
+				logger.error(AppConstant.SHOP_SIGNUP_STORE_UNSUCCESSFUL);
+				result = new Result(AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_STATUS, AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_MESSAGE_GENERIC);
+			}
 			
 			if(availableUser == null){
 				logger.error(AppConstant.SHOP_SIGNUP_STORE_UNSUCCESSFUL);
-				result = AppConstant.SHOP_SIGNUP_UNSUCCESSFUL;
+				result = new Result(AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_STATUS, AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_MESSAGE_GENERIC);
 			} else {
 				logger.debug(AppConstant.SHOP_SIGNUP_STORE_SUCCESSFUL);
 			}
 		} else {
 			logger.error(AppConstant.SHOP_SIGNUP_INVALID_CREDENTIALS);
-			result = AppConstant.SHOP_SIGNUP_UNSUCCESSFUL;
+			result = new Result(AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_STATUS, AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_MESSAGE_GENERIC);
 		}
 		
 		logger.debug(AppConstant.METHOD_OUT);
