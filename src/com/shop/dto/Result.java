@@ -12,6 +12,11 @@ public class Result {
 	private String status;
 	
 	private String message;
+	
+	/*
+	 * Extra details such as user that logged in, etc.
+	 */
+	private Object Details;
 
 	public String getStatus() {
 		return status;
@@ -27,6 +32,14 @@ public class Result {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public Object getDetails() {
+		return Details;
+	}
+
+	public void setDetails(Object details) {
+		Details = details;
 	}
 	
 }

@@ -2,6 +2,8 @@ package com.shop.dto.adapter;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.Authentication;
+
 import com.lambdaworks.crypto.SCryptUtil;
 import com.shop.domain.UserDomainObject;
 import com.shop.dto.User;
@@ -22,6 +24,10 @@ public class UserAdapter extends User {
 		setUsername(request.getParameter("username"));
 		setPassword(request.getParameter("password"));
 		setRememberMe(request.getParameter("rememberMe"));
+	}
+	
+	public UserAdapter(Authentication authentication) {
+		//setUsername(authentication.getName());
 	}
 	
 }

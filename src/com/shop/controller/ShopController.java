@@ -17,7 +17,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.RememberMeServices;
@@ -325,25 +325,21 @@ public class ShopController {
 		return json;
 	}
 	
-	@RequestMapping(value = "isAuthenticated")
-	private boolean isAuthenticated() {
-		boolean isAuthenticated = false;
+	@RequestMapping(value = "/retrieveUser")
+    @ResponseBody
+    public String currentUserName(Authentication authentication) {
 		logger.debug(AppConstant.METHOD_IN);
-		
-		if(SecurityContextHolder.getContext().getAuthentication() != null &&
-				 SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&
-				 //when Anonymous Authentication is enabled
-				 !(SecurityContextHolder.getContext().getAuthentication() 
-				          instanceof AnonymousAuthenticationToken) ) {			
-					isAuthenticated = true;			
+		String json = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			json = mapper.writeValueAsString(authentication.getDetails());			
+		} catch (Exception e){
+			logger.error(e.getMessage());
 		}
 		
-		logger.debug("user " + SecurityContextHolder.getContext().getAuthentication().getName() + " authentication is set to"
-				+ " " + isAuthenticated);
-		
 		logger.debug(AppConstant.METHOD_OUT);
-		return isAuthenticated;
-	}
+        return json;
+    }
 	
 	/**
 	 * returns a list of accounts that has exceeded the maximum number of login attempts
