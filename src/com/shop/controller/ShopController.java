@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -332,7 +333,8 @@ public class ShopController {
 		String json = "";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			json = mapper.writeValueAsString(authentication.getDetails());			
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			json = mapper.writeValueAsString(userDetails);
 		} catch (Exception e){
 			logger.error(e.getMessage());
 		}
