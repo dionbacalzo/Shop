@@ -64,6 +64,12 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 	
 	private static boolean validateSignUpInput(User user){
 		boolean valid = validateInput(user);
+		if(user.getFirstname() == null || user.getFirstname().trim().isEmpty()){
+			valid = false;
+		}
+		if(user.getLastname() == null || user.getLastname().trim().isEmpty()){
+			valid = false;
+		}
 		if(user.getRole() == null || user.getRole().trim().isEmpty()){
 			valid = false;
 		} else {

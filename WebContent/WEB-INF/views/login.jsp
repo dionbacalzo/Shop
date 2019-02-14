@@ -64,6 +64,18 @@
 						</div>
 					</div>
 					<div class="col-12">
+						<div class="col-2">First Name</div>
+						<div class="col-10">
+							<input type="text" name="firstname" />
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="col-2">Last Name</div>
+						<div class="col-10">
+							<input type="text" name="lastname" />
+						</div>
+					</div>
+					<div class="col-12">
 						<div class="col-2">Password</div>
 						<div class="col-10">
 							<input type="password" name="password" />

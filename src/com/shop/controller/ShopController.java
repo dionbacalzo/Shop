@@ -326,6 +326,11 @@ public class ShopController {
 		return json;
 	}
 	
+	/**
+	 * retrieves the current user from the session if available
+	 * @param authentication
+	 * @return
+	 */
 	@RequestMapping(value = "/retrieveUser")
     @ResponseBody
     public String currentUserName(Authentication authentication) {
@@ -333,8 +338,10 @@ public class ShopController {
 		String json = "";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			json = mapper.writeValueAsString(userDetails);
+			if (authentication != null) {
+				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+				json = mapper.writeValueAsString(userDetails);
+			}
 		} catch (Exception e){
 			logger.error(e.getMessage());
 		}

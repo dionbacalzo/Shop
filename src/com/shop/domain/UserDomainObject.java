@@ -14,6 +14,10 @@ public class UserDomainObject {
 	@Indexed(name = "userName", unique = true)
 	private String userName;
 	
+	private String firstname;
+	
+	private String lastname;
+	
 	private String password;
 	
 	private String role;
@@ -34,6 +38,22 @@ public class UserDomainObject {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public String getPassword() {
