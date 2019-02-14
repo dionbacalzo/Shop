@@ -10,6 +10,8 @@ public class UserAdapter extends User {
 
 	public UserAdapter(UserDomainObject user) {
 		setUsername(user.getUserName());
+		setFirstname(user.getFirstname());
+		setLastname(user.getLastname());
 		setRole(user.getRole());
 	}
 	

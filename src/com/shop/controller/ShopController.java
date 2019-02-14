@@ -338,9 +338,10 @@ public class ShopController {
 		String json = "";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			if (authentication != null) {
-				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-				json = mapper.writeValueAsString(userDetails);
+			if (authentication != null && authentication.getPrincipal() != null) {
+				UserDetails userInSession = (UserDetails) authentication.getPrincipal();
+				User user = userManagerImpl.retrieveByUsername(userInSession.getUsername());
+				json = mapper.writeValueAsString(user);
 			}
 		} catch (Exception e){
 			logger.error(e.getMessage());

@@ -13,4 +13,6 @@ public interface UserManager {
 
 	public List<User> resetAccounts(List<User> userList);
 	
+	public User retrieveByUsername(String username);
+	
 }

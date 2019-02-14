@@ -41,6 +41,7 @@ protected final Logger logger = Logger.getLogger(getClass());
 
 	@Override
 	public List<User> resetAccounts(List<User> userList) {
+		logger.debug(AppConstant.METHOD_IN);
 		List<UserDomainObject> userdomainList = new ArrayList<UserDomainObject>();
 		for (User user: userList){
 			UserDomainObject userdomain = userDaoImpl.findByUserName(user.getUsername());
@@ -50,8 +51,18 @@ protected final Logger logger = Logger.getLogger(getClass());
 		if(!userdomainList.isEmpty()){
 			userDaoImpl.saveAll(userdomainList);
 		}
-		
+		logger.debug(AppConstant.METHOD_OUT);
 		return getAccountsToReset();
+	}
+
+	@Override
+	public User retrieveByUsername(String username) {
+		logger.debug(AppConstant.METHOD_IN);
+
+		UserDomainObject user = userDaoImpl.findByUserName(username);
+		
+		logger.debug(AppConstant.METHOD_OUT);
+		return new UserAdapter(user);
 	}
 
 }

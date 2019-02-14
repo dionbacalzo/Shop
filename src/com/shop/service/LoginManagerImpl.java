@@ -31,6 +31,7 @@ import com.shop.domain.UserDomainObject;
 import com.shop.domain.adapter.UserDomainObjectAdapter;
 import com.shop.dto.Result;
 import com.shop.dto.User;
+import com.shop.dto.adapter.UserAdapter;
 import com.shop.exception.ShopException;
 
 @Service
@@ -113,7 +114,8 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 			Authentication auth = authenticate(authReq);
 	        
 	        SecurityContextHolder.getContext().setAuthentication(auth);
-	        result.setDetails((UserDetails) auth.getPrincipal());
+	        UserDetails userInSession = (UserDetails) auth.getPrincipal();
+	        result.setDetails(new UserAdapter(userDaoImpl.findByUserName(userInSession.getUsername())));
 		} catch(ShopException e){
 			logger.debug(e.getMessage());
 			result = new Result(AppConstant.SHOP_LOGIN_UNSUCCESSFUL_STATUS, e.getMessage());
@@ -166,8 +168,8 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 	        //reset counter for a successful login
 	        if(availableUser.getTryCounter() > 0){
 				availableUser.setTryCounter(0);
+				userDaoImpl.save(availableUser);
 			}
-			userDaoImpl.save(availableUser);
 		} else {
 			throw new ShopException(result.getMessage());
 		}
