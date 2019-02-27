@@ -81,6 +81,12 @@
 							<input type="password" name="password" />
 						</div>
 					</div>
+					<div class="col-12">
+						<div class="col-2">Retype Password</div>
+						<div class="col-10">
+							<input type="password" name="passwordRetype" />
+						</div>
+					</div>
 
 					<div class="col-12">
 						<div class="col-2">Role</div>

@@ -86,6 +86,51 @@ function initializeLoginForm() {
 	});
 }
 
+function validateSignUpFormInput(formData, $result){
+	//check for empty inputs
+	var hasCompleteValues = true;
+
+	if (formData['username'].length === 0) {
+		if(!$result.hasClass(warningCss)) {
+			$result.addClass(warningCss);
+		}
+		$result.text("Missing username");
+		hasCompleteValues = false;
+	} else if (formData['firstname'].length === 0) {
+		if(!$result.hasClass(warningCss)) {
+			$result.addClass(warningCss);
+		}
+		$result.text("Missing Firstname");
+		hasCompleteValues = false;
+	} else if (formData['lastname'].length === 0) {
+		if(!$result.hasClass(warningCss)) {
+			$result.addClass(warningCss);
+		}
+		$result.text("Missing Lastname");
+		hasCompleteValues = false;
+	} else if (formData['password'].length === 0) {
+		if(!$result.hasClass(warningCss)) {
+			$result.addClass(warningCss);
+		}
+		$result.text("Missing password");
+		hasCompleteValues = false;
+	} else if (formData['passwordRetype'].length === 0) {
+		if(!$result.hasClass(warningCss)) {
+			$result.addClass(warningCss);
+		}
+		$result.text("Type again the password");
+		hasCompleteValues = false;
+	} else if (formData['passwordRetype'] !== formData['password']) {
+		if(!$result.hasClass(warningCss)) {
+			$result.addClass(warningCss);
+		}
+		$result.text("The password fields must match");
+		hasCompleteValues = false;
+	}
+	
+	return hasCompleteValues;
+}
+
 function initializeSignupForm() {
 	$signupForm.submit(function(event) {
 		event.preventDefault();
@@ -101,7 +146,7 @@ function initializeSignupForm() {
 		
 		var formData = objectifyForm($signupForm.serializeArray());
 		
-		if(validateFormInput(formData, $signupResult)) {
+		if(validateSignUpFormInput(formData, $signupResult)) {
 			$.ajax({
 				url :  $signupForm.attr("action"),
 				type : "POST",
