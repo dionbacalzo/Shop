@@ -8,7 +8,10 @@ repositories {
 }
 
 sourceSets {
-	test.java.srcDir "test"	
+	test {
+		java.srcDir "test"
+		resources.srcDir 'test/resource'
+	}	
 	main.java.srcDir "src"
 }
 
