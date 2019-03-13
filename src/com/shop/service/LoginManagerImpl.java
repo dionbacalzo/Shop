@@ -46,12 +46,15 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 	@Autowired
 	private TokenDao tokenDao;
 	
+	@Autowired
+    private UserDetailsService userDetailsService;
+	
 	private static String[] ROLE = {
 			"USER", 
 			"ADMIN", 
 	}; 
 	
-	private static boolean validateInput(User user){
+	private boolean validateInput(User user){
 		boolean valid = true;
 		if(user.getUsername() == null || user.getUsername().trim().isEmpty()){
 			valid = false;
@@ -63,7 +66,7 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 		return valid;
 	}
 	
-	private static boolean validateSignUpInput(User user){
+	private boolean validateSignUpInput(User user){
 		boolean valid = validateInput(user);
 		if(user.getFirstname() == null || user.getFirstname().trim().isEmpty()){
 			valid = false;
@@ -127,9 +130,6 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 		return result;
 	}
 	
-	@Autowired
-    private UserDetailsService userDetailsService;
-
 	@Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
 		Result result = new Result(AppConstant.SHOP_LOGIN_SUCCESSFUL_STATUS, AppConstant.SHOP_LOGIN_SUCCESSFUL_MESSAGE);

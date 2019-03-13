@@ -13,40 +13,39 @@
 </head>
 
 <body>
+	<div id="content" class="col-12">
+		<div class="col-1">&nbsp;</div>
+		<div class="col-10">
+			<div class="title">Upload Items</div>
 
-		<div id="content" class="col-12">
-			<div class="col-1">&nbsp;</div>
-			<div class="col-10">
-				<div class="title">Upload Items</div>
-
-				<form id="uploadform" type="file" method="POST"
-					action="${pageContext.request.contextPath}/uploadItems"
-					enctype="multipart/form-data" class="col-12">
-					<div class="col-12">
-						<input id="uploadFileInput" class="col-5" type="file" name="file"
-							accept=".txt">
-						<div class="col-7">&nbsp;</div>
-					</div>
-					<input id="uploadFileSubmit" type="submit">
-					<div class="col-12">
-						<p id="uploadResult"></p>
-					</div>
-				</form>
-			</div>
-			<div class="col-1">&nbsp;</div>
-		
-			<div class="col-12">
-				<div id='loader'></div>
-				<div class="col-1">&nbsp;</div>
-				<div id="itemTableContainer" class="col-10"></div>
-				<div class="col-1">&nbsp;</div>
-			</div>
-			<div class="col-12">
-				<div class="col-1">&nbsp;</div>
-				<div id="pagination" class="col-10"></div>
-				<div class="col-1">&nbsp;</div>
-			</div>
+			<form id="uploadform" type="file" method="POST"
+				action="${pageContext.request.contextPath}/uploadItems"
+				enctype="multipart/form-data" class="col-12">
+				<div class="col-12">
+					<input id="uploadFileInput" class="col-5" type="file" name="file"
+						accept=".txt">
+					<div class="col-7">&nbsp;</div>
+				</div>
+				<input id="uploadFileSubmit" type="submit">
+				<div class="col-12">
+					<p id="uploadResult"></p>
+				</div>
+			</form>
 		</div>
+		<div class="col-1">&nbsp;</div>
+
+		<div class="col-12">
+			<div id='loader'></div>
+			<div class="col-1">&nbsp;</div>
+			<div id="itemTableContainer" class="col-10"></div>
+			<div class="col-1">&nbsp;</div>
+		</div>
+		<div class="col-12">
+			<div class="col-1">&nbsp;</div>
+			<div id="pagination" class="col-10"></div>
+			<div class="col-1">&nbsp;</div>
+		</div>
+	</div>
 	</div>
 
 

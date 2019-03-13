@@ -1,0 +1,15 @@
+#profileForm {
+	margin: 15px 0;
+}
+
+#profileForm [class*="col-"] {
+	margin: 3px 0;
+}
+
+#passwordForm {
+	margin: 15px 0;
+}
+
+#passwordForm [class*="col-"] {
+	margin: 3px 0;
+}

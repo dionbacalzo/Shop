@@ -68,6 +68,30 @@ public class AppConstant {
 	public static final String SHOP_USER_PASSWORD_MISMATCH = "password does not match for user {0}";
 
 	public static final String SHOP_USER_EXCEEDED_LOGIN_ATTEMPT = "user {0} has exceeded login attempt";
+	
+	public static final String SHOP_PROFILE_INVALID_INPUT = "invalid data: unable to update user profile";
+	
+	
+	public static final String SHOP_PASSWORD_UPDATE_UNSUCCESSFUL_STATUS = "FAIL";
+	
+	public static final String SHOP_PASSWORD_UPDATE_SUCCESSFUL_STATUS = "SUCCESS";
+	
+	public static final String SHOP_PASSWORD_UPDATE_UNSUCCESSFUL_MISSING_PASSWORD = "The old password is missing";
+	
+	public static final String SHOP_PASSWORD_UPDATE_UNSUCCESSFUL_MISSING_NEWPASSWORD = "The new password is missing";
+	
+	public static final String SHOP_PASSWORD_UPDATE_UNSUCCESSFUL_MISSING_NEWPASSWORD2 = "Type again the new password";
+	
+	public static final String SHOP_PASSWORD_UPDATE_UNSUCCESSFUL_INCORRECT_PASSWORD = "The old password is incorrect";
+	
+	public static final String SHOP_PASSWORD_UPDATE_UNSUCCESSFUL_INCORRECT_NEWPASSWORD = "The new password fields do not match";
+	
+	public static final String SHOP_PASSWORD_UPDATE_UNSUCCESSFUL_MATCHING_NEWPASSWORD = "The old password must not match the new password";
+	
+	public static final String SHOP_PASSWORD_UPDATE_MESSAGE_SUCCESS = "Successfully updated the password";
+	
+	public static final String SHOP_PASSWORD_UPDATE_MESSAGE_FAIL = "Failed to change the password";
+	
 
 	public static final String SHOP_EXCEEDED_LOGIN_ATTEMPT = "exceeded login attempt";
 	

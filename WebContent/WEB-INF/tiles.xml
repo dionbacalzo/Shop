@@ -34,6 +34,12 @@
    <definition name="upload" extends="template-def">  
        <put-attribute name="title" value="Shop Display: Upload" />  
        <put-attribute name="body" value="/WEB-INF/views/upload.jsp" />  
+   </definition>
+
+   <!-- Profile Page -->
+   <definition name="profile" extends="template-def">  
+       <put-attribute name="title" value="Shop Display: Profile" />  
+       <put-attribute name="body" value="/WEB-INF/views/profile.jsp" />  
    </definition>  
   
 </tiles-definitions>
