@@ -99,6 +99,7 @@ function initializeProfileForm() {
 		},
 		success : function(data) {
 			if (data) {
+				data = JSON.parse(data);
 				$('input[name="firstname"]').val(data.firstname);
 				$('input[name="lastname"]').val(data.lastname);
 			} else {
