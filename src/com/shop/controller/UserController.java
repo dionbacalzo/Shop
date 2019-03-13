@@ -154,7 +154,7 @@ public class UserController {
 	/**
 	 * Updates the password of logged in user, object contains the old and new password
 	 * @param authentication
-	 * @param object
+	 * @param object should be a valid json object containing password, newPassword, newPasswordRetype
 	 * @return result object containing the status and the result message
 	 * @throws Exception
 	 */

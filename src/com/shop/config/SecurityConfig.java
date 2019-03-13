@@ -84,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .antMatchers("/delete").authenticated()
 	        .antMatchers("/uploadItems").authenticated()
 	        .antMatchers("/updateUser").authenticated()
+	        .antMatchers("/updatePassword").authenticated()
 	        .antMatchers("/admin").hasAuthority("ADMIN")
 	        .antMatchers("/accountResetList").hasAuthority("ADMIN")
 	        .antMatchers("/resetAccount").hasAuthority("ADMIN")

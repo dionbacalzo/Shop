@@ -65,7 +65,7 @@ function validatePasswordFormInput(formData, $result) {
 		}
 		$result.text("The new password fields must match");
 		hasCompleteValues = false;
-	} else if (formData['newPasswordRetype'] === formData['newPassword']) {
+	} else if (formData['password'] === formData['newPassword']) {
 		if (!$result.hasClass(warningCss)) {
 			$result.addClass(warningCss);
 		}
