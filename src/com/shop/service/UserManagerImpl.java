@@ -165,7 +165,11 @@ public class UserManagerImpl implements UserManager {
 		} catch (IOException e) {
 			result = new Result(AppConstant.SHOP_LOGIN_UNSUCCESSFUL_STATUS,
 					AppConstant.SHOP_LOGIN_UNSUCCESSFUL_MESSAGE_GENERIC);
-			logger.error(result.getMessage());
+			logger.error(e.getMessage());
+		} catch (Exception e) {
+			result = new Result(AppConstant.SHOP_LOGIN_UNSUCCESSFUL_STATUS,
+					AppConstant.SHOP_LOGIN_UNSUCCESSFUL_MESSAGE_GENERIC);
+			logger.error(e.getMessage());
 		}
 		logger.debug(AppConstant.METHOD_OUT);
 
