@@ -13,3 +13,8 @@
 #passwordForm [class*="col-"] {
 	margin: 3px 0;
 }
+
+#pic-preview {
+    width: 128px;
+    height: 128px;
+}

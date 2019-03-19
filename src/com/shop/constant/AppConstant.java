@@ -1,5 +1,8 @@
 package com.shop.constant;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.shop.util.PropertyUtil;
 
 public class AppConstant {
@@ -71,6 +74,7 @@ public class AppConstant {
 	
 	public static final String SHOP_PROFILE_INVALID_INPUT = "invalid data: unable to update user profile";
 	
+	public static final String SHOP_PROFILE_INVALID_PICTURE = "invalid picture data";
 	
 	public static final String SHOP_PASSWORD_UPDATE_UNSUCCESSFUL_STATUS = "FAIL";
 	
@@ -92,7 +96,8 @@ public class AppConstant {
 	
 	public static final String SHOP_PASSWORD_UPDATE_MESSAGE_FAIL = "Failed to change the password";
 	
-
+	public static final List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/gif");
+	
 	public static final String SHOP_EXCEEDED_LOGIN_ATTEMPT = "exceeded login attempt";
 	
 	public static final String REMEMBER_ME_KEY = PropertyUtil.getProperty("remember.me.key");

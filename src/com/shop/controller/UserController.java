@@ -12,8 +12,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -126,21 +128,22 @@ public class UserController {
 	}
 	
 	/**
-	 * Updates the firstname and lastname of logged in user
+	 * updates the details of the current logged in user
 	 * @param authentication
-	 * @param user
-	 * @return the updated user details
+	 * @param userJSON required, contains the firstname and lastname of the user
+	 * @param picture optional, the profile picture
+	 * @return user profile
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "updateUser")
-	protected String updateUser(Authentication authentication, @RequestBody User user) throws Exception {
+	protected String updateUser(Authentication authentication, @RequestPart("user") String userJSON, @RequestPart(required=false, name="picture") MultipartFile picture) throws Exception {
 		logger.debug(AppConstant.METHOD_IN);
 		String json = null;
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			if (authentication != null && authentication.getPrincipal() != null) {
 				UserDetails userInSession = (UserDetails) authentication.getPrincipal();
-				user = userManagerImpl.updateNameByUsername(userInSession.getUsername(), user);
+				User user = userManagerImpl.updateNameByUsername(userInSession.getUsername(), userJSON, picture);
 				json = mapper.writeValueAsString(user);
 			}
 		} catch (Exception e){

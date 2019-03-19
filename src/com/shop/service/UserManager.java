@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.dto.Result;
 import com.shop.dto.User;
@@ -17,8 +18,8 @@ public interface UserManager {
 	
 	public User retrieveByUsername(String username);
 
-	public User updateNameByUsername(String username, User user);
-
 	public Result updatePassword(UserDetails userInSession, Object object);
+
+	public User updateNameByUsername(String username, String userJSON, MultipartFile picture);
 	
 }

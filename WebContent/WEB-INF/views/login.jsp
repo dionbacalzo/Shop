@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="resources/css/login.css">
 </head>
 <body>
-	<div id="content">
+	<div id="content" class="col-12">
 		<div class="col-12">
 
 			<div class="col-2">&nbsp;</div>

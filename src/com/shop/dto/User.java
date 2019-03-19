@@ -13,6 +13,8 @@ public class User {
 	private String role;
 	
 	private String rememberMe;
+	
+	private byte[] picture;
 
 	public String getUsername() {
 		return username;
@@ -60,6 +62,14 @@ public class User {
 
 	public void setRememberMe(String rememberMe) {
 		this.rememberMe = rememberMe;
+	}
+
+	public byte[] getPicture() {
+		return picture;
+	}
+
+	public void setPicture(byte[] picture) {
+		this.picture = picture;
 	}
 
 }

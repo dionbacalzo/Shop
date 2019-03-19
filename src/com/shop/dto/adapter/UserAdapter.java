@@ -13,6 +13,9 @@ public class UserAdapter extends User {
 		setFirstname(user.getFirstname());
 		setLastname(user.getLastname());
 		setRole(user.getRole());
+		if (user.getPicture() != null) {
+			setPicture(user.getPicture().getData());
+		}
 	}
 	
 	public UserAdapter(User user) {

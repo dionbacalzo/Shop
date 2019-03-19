@@ -1,5 +1,6 @@
 package com.shop.domain;
 
+import org.bson.types.Binary;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -23,6 +24,8 @@ public class UserDomainObject {
 	private String role;
 	
 	private int tryCounter;
+		
+    private Binary picture;
 
 	public ObjectId get_id() {
 		return _id;
@@ -78,5 +81,13 @@ public class UserDomainObject {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public Binary getPicture() {
+		return picture;
+	}
+
+	public void setPicture(Binary picture) {
+		this.picture = picture;
 	}
 }

@@ -14,4 +14,8 @@ if(document.title == "Shop Display: Home") {
 	$menuUpload = $("#menu-upload");
 	$menuUpload.removeAttr("href");
 	$menuUpload.addClass("active");
+} else if (document.title == "Shop Display: Profile"){
+	$menuUpload = $("#menu-profile");
+	$menuUpload.removeAttr("href");
+	$menuUpload.addClass("active");
 }

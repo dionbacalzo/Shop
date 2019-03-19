@@ -12,7 +12,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambdaworks.crypto.SCryptUtil;
@@ -77,23 +80,48 @@ public class UserManagerImpl implements UserManager {
 		return new UserAdapter(user);
 	}
 
-	private boolean validateNameInput(User user) {
+	private boolean validateInput(User user, MultipartFile picture) {
 		boolean valid = true;
-		if (user.getFirstname() == null || user.getFirstname().trim().isEmpty()) {
+		if (user == null) {
+			valid = false;
+		} else if (user.getFirstname() == null || user.getFirstname().trim().isEmpty()) {
 			valid = false;
 		} else if (user.getLastname() == null || user.getLastname().trim().isEmpty()) {
 			valid = false;
+		} else if(picture != null) {
+			if(!AppConstant.contentTypes.contains(picture.getContentType())) {
+				valid = false;
+				logger.error(AppConstant.SHOP_PROFILE_INVALID_PICTURE);
+			}
 		}
 
 		return valid;
 	}
 
 	@Override
-	public User updateNameByUsername(String username, User user) {
+	public User updateNameByUsername(String username, String userJSON, MultipartFile picture) {
 		logger.debug(AppConstant.METHOD_IN);
+		
+		User user = null;
+		try {
+			user = new ObjectMapper().readValue(userJSON, User.class);
+		} catch (JsonParseException e) {
+			logger.error(AppConstant.SHOP_PROFILE_INVALID_INPUT);
+		} catch (JsonMappingException e) {
+			logger.error(AppConstant.SHOP_PROFILE_INVALID_INPUT);
+		} catch (IOException e) {
+			logger.error(AppConstant.SHOP_PROFILE_INVALID_INPUT);
+		}
 
 		User updatedUser = null;
-		if (validateNameInput(user)) {
+		if (validateInput(user, picture)) {
+			if(picture != null) {
+				try {
+					user.setPicture(picture.getBytes());
+				} catch (IOException e) {
+					logger.error(AppConstant.SHOP_PROFILE_INVALID_PICTURE);
+				}
+			}
 			updatedUser = new UserAdapter(userDaoImpl.UpdateNameByUserName(username, user));
 		} else {
 			logger.error(AppConstant.SHOP_PROFILE_INVALID_INPUT);
