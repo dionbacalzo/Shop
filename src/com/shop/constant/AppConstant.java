@@ -64,7 +64,9 @@ public class AppConstant {
 	
 	public static final String SHOP_SIGNUP_STORE_UNSUCCESSFUL = "Unable to store user";
 
-	public static final String SHOP_SIGNUP_STORE_SUCCESSFUL = "User store successful";
+	public static final String SHOP_SIGNUP_STORE_SUCCESSFUL = "User {0} is stored successfully";
+	
+	public static final String SHOP_SIGNUP_DUPLICATE_MESSAGE = "Username is already taken choose another";
 	
 	public static final String SHOP_USER_NOT_FOUND = "user {0} not found";
 
@@ -106,4 +108,5 @@ public class AppConstant {
 	
 	// Token is valid for one month
 	public static final int TOKEN_VALIDITY_DAYS = 31;
+	
 }

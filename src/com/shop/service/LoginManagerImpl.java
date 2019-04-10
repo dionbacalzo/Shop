@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -191,17 +192,22 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 		if(validateSignUpInput(user)){
 			try {
 				availableUser = userDaoImpl.insert(UserDomainObjectAdapter.parseUser(user));
+				
+				if(availableUser == null){
+					logger.error(AppConstant.SHOP_SIGNUP_STORE_UNSUCCESSFUL);
+					result = new Result(AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_STATUS, AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_MESSAGE_GENERIC);
+				} else {
+					logger.debug(MessageFormat.format(AppConstant.SHOP_SIGNUP_STORE_SUCCESSFUL, availableUser.getUserName()));
+				}
+				
+			} catch (DuplicateKeyException e) {
+				logger.debug(AppConstant.SHOP_SIGNUP_STORE_UNSUCCESSFUL);
+				result = new Result(AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_STATUS, AppConstant.SHOP_SIGNUP_DUPLICATE_MESSAGE);
 			} catch (Exception e) {
 				logger.error(AppConstant.SHOP_SIGNUP_STORE_UNSUCCESSFUL);
 				result = new Result(AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_STATUS, AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_MESSAGE_GENERIC);
 			}
 			
-			if(availableUser == null){
-				logger.error(AppConstant.SHOP_SIGNUP_STORE_UNSUCCESSFUL);
-				result = new Result(AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_STATUS, AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_MESSAGE_GENERIC);
-			} else {
-				logger.debug(AppConstant.SHOP_SIGNUP_STORE_SUCCESSFUL);
-			}
 		} else {
 			logger.error(AppConstant.SHOP_SIGNUP_INVALID_CREDENTIALS);
 			result = new Result(AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_STATUS, AppConstant.SHOP_SIGNUP_UNSUCCESSFUL_MESSAGE_GENERIC);
