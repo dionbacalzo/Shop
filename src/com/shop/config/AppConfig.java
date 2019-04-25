@@ -42,6 +42,7 @@ public class AppConfig extends AbstractMongoConfiguration implements WebMvcConfi
 		builder.writeConcern(WriteConcern.JOURNALED);
 		builder.readPreference(ReadPreference.secondaryPreferred());
 		MongoClientOptions options = builder.build();
+		//if you want your db to be accessed remotely then at bin/mongod.cfg, change bindIp to 0.0.0.0
 		MongoClient mongoClient = new MongoClient(new ServerAddress(env.getProperty("mongo.server"), Integer.parseInt( env.getProperty("mongo.port"))), options);
 		return mongoClient;
 		//return new MongoClient("localhost", 27017);
