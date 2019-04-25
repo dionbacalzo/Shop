@@ -12,7 +12,10 @@ sourceSets {
 		java.srcDir "test"
 		resources.srcDir 'test/resource'
 	}	
-	main.java.srcDir "src"
+	main {
+		java.srcDir "src"
+		resources.srcDir 'src'
+	}
 }
 
 sourceCompatibility = 1.8
