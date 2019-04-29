@@ -2,8 +2,8 @@ package com.shop.util;
 
 import java.math.BigDecimal;
 
-import org.apache.log4j.Logger;
-
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import com.shop.adapter.ShopItemAdapter;
 import com.shop.constant.AppConstant;
 import com.shop.domain.ItemDomainObject;
@@ -12,7 +12,7 @@ import com.shop.exception.ShopException;
 
 public class ShopUtil {
 	
-	private final static Logger logger = Logger.getLogger(ShopItemAdapter.class);
+	private final static Logger logger = LogManager.getLogger(ShopItemAdapter.class);
 	
 	public static boolean validateItemDomain(ItemDomainObject item) {
 		boolean result = true;

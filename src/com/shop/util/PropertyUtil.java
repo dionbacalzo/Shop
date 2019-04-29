@@ -7,8 +7,8 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import com.shop.constant.AppConstant;
 
 /**
@@ -18,7 +18,7 @@ import com.shop.constant.AppConstant;
  */
 public class PropertyUtil {
 	
-	protected static final Logger logger = Logger.getLogger(PropertyUtil.class);
+	protected static final Logger logger = LogManager.getLogger(PropertyUtil.class);
 	
 	/**
 	 * try to get property using default property file

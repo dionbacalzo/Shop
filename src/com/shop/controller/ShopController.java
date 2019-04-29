@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
@@ -35,7 +36,7 @@ import com.shop.service.ProductManager;
 @RestController
 public class ShopController {
 	
-	private final Logger logger = Logger.getLogger(getClass());
+	private final Logger logger = LogManager.getLogger(getClass());
 	
 	@Autowired @Qualifier("productManagerImpl")	
 	private ProductManager productManagerImpl;

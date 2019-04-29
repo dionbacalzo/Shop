@@ -3,7 +3,8 @@ package com.shop.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -27,7 +28,7 @@ import com.shop.service.LoginManager;
 @RestController
 public class AuthenticationController {
 	
-	private final Logger logger = Logger.getLogger(getClass());
+	private final Logger logger = LogManager.getLogger(getClass());
 	
 	@Autowired @Qualifier("loginManagerImpl")	
 	private LoginManager loginManagerImpl;

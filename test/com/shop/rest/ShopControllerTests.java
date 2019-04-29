@@ -27,7 +27,7 @@ import junit.framework.TestCase;
 
 @ContextConfiguration(classes= {TestConfig.class})
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = ShopController.class, secure = true)
+@WebMvcTest(properties= "spring.main.allow-bean-definition-overriding=true",value = ShopController.class, secure = true)
 public class ShopControllerTests extends TestCase {
 	
 	@Autowired

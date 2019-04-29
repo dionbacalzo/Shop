@@ -6,7 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ import com.shop.util.DateUtil;
 @Component("productManagerImpl")
 public class ProductManagerImpl implements ProductManager {
 	
-	protected final Logger logger = Logger.getLogger(getClass());
+	protected final Logger logger = LogManager.getLogger(getClass());
 	
 	@Autowired
 	private ProductDao productDaoImpl;

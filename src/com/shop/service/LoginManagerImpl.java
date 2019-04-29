@@ -8,7 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -39,7 +40,7 @@ import com.shop.exception.ShopException;
 @Component("loginManagerImpl")
 public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 
-	protected final Logger logger = Logger.getLogger(getClass());
+	protected final Logger logger = LogManager.getLogger(getClass());
 	
 	@Autowired
 	private UserDao userDaoImpl;

@@ -5,7 +5,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.constant.AppConstant;
@@ -16,7 +17,7 @@ import com.shop.util.ShopUtil;
 
 public class FileContentAdapter {
 	
-	protected final Logger logger = Logger.getLogger(getClass());
+	protected final Logger logger = LogManager.getLogger(getClass());
 	
 	public List<ItemDomainObject> parseFile(String fileContent, List<ItemDomainObject> list) throws Exception{
 		logger.debug(AppConstant.METHOD_IN);

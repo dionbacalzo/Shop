@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.IntStream;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.bson.types.ObjectId;
 import org.springframework.util.StringUtils;
 
@@ -23,7 +24,7 @@ import com.shop.util.ShopUtil;
 
 public class ShopItemAdapter {
 	
-	private final static Logger logger = Logger.getLogger(ShopItemAdapter.class);
+	private final static Logger logger = LogManager.getLogger(ShopItemAdapter.class);
 	
 	/**
 	 * Frontend Display
