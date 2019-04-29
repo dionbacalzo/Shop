@@ -43,9 +43,9 @@ dependencies {
 	compile 'org.springframework:spring-web:5.1.6.RELEASE'
 	compile 'org.springframework:spring-webmvc:5.1.6.RELEASE'
 	compile 'org.springframework.data:spring-data-commons:2.1.6.RELEASE'
-    compile 'org.springframework.data:spring-data-mongodb:2.1.6.RELEASE'
+	compile 'org.springframework.data:spring-data-mongodb:2.1.6.RELEASE'
     //compile 'org.springframework.hateoas:spring-hateoas:0.24.0.RELEASE'
-    compile 'org.springframework.boot:spring-boot-starter-hateoas:2.1.4.RELEASE'    
+	compile 'org.springframework.boot:spring-boot-starter-hateoas:2.1.4.RELEASE'    
 	compile 'org.apache.tiles:tiles-jsp:3.0.8'
 	compile 'javax.servlet:jstl:1.2'
 	
