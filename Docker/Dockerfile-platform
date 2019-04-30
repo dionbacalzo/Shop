@@ -15,6 +15,10 @@ RUN apt-get update && \
 	
 # initial gradle setup for libraries
 ADD . /app
+WORKDIR /app
+
+# in case user is running the workspace from windows
+RUN dos2unix gradlew
 # make sure you are using the correct proxy setting at gradle.properties for this to work
 RUN cd /app && ./gradlew build -x test
 RUN rm -rf /app ||:	
