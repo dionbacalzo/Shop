@@ -5,9 +5,9 @@
  - If you encounter the error `docker /usr/bin/env 'sh\r'...` when at the gradlew command then use the `dos2unix gradlew` command to update the eol of the gradlew file
 
 ```
- docker build -f Docker/Dockerfile-platform -t platform:1.0 .
- docker build -f Docker/Dockerfile-update -t update:1.0 .
- docker run -d -p 8080:8080 update:1.0
+ docker build -f Docker/Dockerfile-platform -t platform:2.0 .
+ docker build -f Docker/Dockerfile-update -t update:2.0 .
+ docker run -d -p 8080:8080 update:2.0
  # access http://localhost:8080
 ```
  - if you want to check the contents inside a container the use the following command from bash/powershell

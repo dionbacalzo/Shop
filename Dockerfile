@@ -7,9 +7,9 @@ ENV https_proxy http://10.12.251.2:8080
 RUN apt-get update && \
 	apt-get install -y software-properties-common && \
 	apt-get install -y vim && \
-	apt-get install -y dos2unix && \    
+	apt-get install -y dos2unix && \
 	add-apt-repository ppa:openjdk-r/ppa && \
-    apt-get install -y openjdk-8-jdk && \
+    apt-get install -y openjdk-11-jdk && \
 	apt-get install -y wget && \
     apt-get clean
 	
@@ -44,4 +44,3 @@ CMD /usr/local/tomcat/bin/catalina.sh run
 
 # note to self: wget checks if a specific ip from a proxy is moved or is currently working
 # use the DockerFiles at the docker folder instead if you want a cotinuous build/update process
-
