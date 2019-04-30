@@ -19,6 +19,7 @@ WORKDIR /app
 # RUN file="$(ls -1 /app)" && echo $file
 # RUN echo $(ls -1 /app)
 
+# in case user is running the workspace from windows
 RUN dos2unix gradlew
 # make sure you are using the correct proxy setting at gradle.properties for this to work
 RUN ./gradlew build war -x test

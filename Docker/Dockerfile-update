@@ -10,6 +10,8 @@ WORKDIR /app
 
 # RUN echo $(ls -1 /app)
 
+# in case user is running the workspace from windows
+RUN dos2unix gradlew
 # make sure you are using the correct proxy setting at gradle.properties for this to work
 RUN ./gradlew clean build war -x test
 
@@ -24,11 +26,11 @@ EXPOSE 8080
 CMD /usr/local/tomcat/bin/catalina.sh run
 
 # POWERSHELL : stop all running containers docker ps -a -q | ForEach { docker stop $_ }
-# docker build -f Docker/Dockerfile-update -t update . //run from base folder /shop
-# docker run -d -p 8080:8080 update
+# docker build -f Docker/Dockerfile-update -t update:1.0 . //run from base folder /shop
+# docker run -d -p 8080:8080 update:1.0
 # docker exec -it <container id> bash //access container bash
 
-# note to self: wget checks if a specific ip from a proxy is moved or is currently working
+# note to self: wget checks if a specific ip from a proxy if it is moved or is currently working
 # use 'docker system prune' to clean up all failed/dangling container & images
 # to access host mongodb at bin/mongod.cfg, change bindIp to 0.0.0.0 then change the mongo.server value at mongo.properties to host ip
 
