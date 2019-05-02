@@ -16,7 +16,7 @@
  
 **Using Docker Compose to run and build the program**
 
-To build and run the update:2.0 image instead of using the docker run and build command from above, you can instead use the docker-compose file .
+To build and run the Dockerfile-update instead of using the docker run and build command from above, you can instead use the docker-compose file .
 
 Make sure that at the terminal you are at the root directory /Shop
   
