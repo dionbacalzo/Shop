@@ -12,7 +12,23 @@
 ```
  - if you want to check the contents inside a container the use the following command from bash/powershell
 	`docker exec -it <container id> bash`
- - you only need to run the first docker build once to create the platform image. The first image will contain all necessary tools (OS, Server, libraries) and will be used by the update image for every code changes.	
+ - you only need to run the first docker build once to create the platform image. The first image will contain all necessary tools (OS, Server, libraries) and will be used by the update image for every code changes.
+ 
+**Using Docker Compose to run and build the program**
+
+To build and run the update:2.0 image instead of using the docker run and build command from above, you can instead use the docker-compose file .
+
+Make sure that at the terminal you are at the root directory /Shop
+  
+```
+docker-compose -f Docker/docker-compose.yml up
+```
+
+To rebuild the image use the following cmd:
+
+```
+docker-compose -f Docker/docker-compose.yml build
+```
 
 **Debugging Docker errors:**
 
