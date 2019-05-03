@@ -8,9 +8,9 @@ RUN apt-get update && \
 	apt-get install -y software-properties-common && \
 	apt-get install -y vim && \
 	apt-get install -y dos2unix && \
-	add-apt-repository ppa:openjdk-r/ppa && \
+    add-apt-repository ppa:openjdk-r/ppa && \
     apt-get install -y openjdk-11-jdk && \
-	apt-get install -y wget && \
+    apt-get install -y wget && \
     apt-get clean
 	
 ADD . /app

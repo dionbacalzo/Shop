@@ -18,7 +18,7 @@
 
 To build and run the Dockerfile-update instead of using the docker run and build command from above, you can instead use the docker-compose file .
 
-Make sure that at the terminal you are at the root directory /Shop
+Make sure that at the terminal you're location is at the root directory /Shop
   
 ```
 docker-compose -f Docker/docker-compose.yml up
