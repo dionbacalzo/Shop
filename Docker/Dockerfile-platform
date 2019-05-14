@@ -9,7 +9,7 @@ RUN apt-get update && \
 	apt-get install -y vim && \
 	apt-get install -y dos2unix && \    
 	add-apt-repository ppa:openjdk-r/ppa && \
-    apt-get install -y openjdk-8-jdk && \
+    apt-get install -y openjdk-11-jdk && \
 	apt-get install -y wget && \
     apt-get clean
 	
@@ -30,7 +30,7 @@ RUN cd /tmp && tar xvfz tomcat.tar.gz
 RUN cp -Rv /tmp/apache-tomcat-9.0.19/* /usr/local/tomcat/
 
 # POWERSHELL : stop all running containers docker ps -a -q | ForEach { docker stop $_ }
-# docker build -f Docker/Dockerfile-platform -t platform:1.0 . //run from base folder /shop
+# docker build -f Docker/Dockerfile-platform -t platform:2.0 . //run from base folder /shop
 # docker exec -it <container id> bash //access container bash
 
 # note to self: wget checks if a specific ip from a proxy is moved or is currently working

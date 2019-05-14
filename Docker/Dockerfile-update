@@ -1,4 +1,4 @@
-FROM platform:1.0
+FROM platform:2.0
 
 # change or remove proxy to current work setup
 ENV http_proxy http://10.12.251.2:8080
@@ -26,11 +26,10 @@ EXPOSE 8080
 CMD /usr/local/tomcat/bin/catalina.sh run
 
 # POWERSHELL : stop all running containers docker ps -a -q | ForEach { docker stop $_ }
-# docker build -f Docker/Dockerfile-update -t update:1.0 . //run from base folder /shop
-# docker run -d -p 8080:8080 update:1.0
+# docker build -f Docker/Dockerfile-update -t update:2.0 . //run from base folder /shop
+# docker run -d -p 8080:8080 update:2.0
 # docker exec -it <container id> bash //access container bash
 
 # note to self: wget checks if a specific ip from a proxy if it is moved or is currently working
 # use 'docker system prune' to clean up all failed/dangling container & images
 # to access host mongodb at bin/mongod.cfg, change bindIp to 0.0.0.0 then change the mongo.server value at mongo.properties to host ip
-

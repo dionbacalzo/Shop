@@ -1,7 +1,7 @@
 package com.shop.util;
 
-import org.apache.log4j.Logger;
-
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import com.shop.constant.AppConstant;
 import com.shop.exception.ShopException;
 
@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class DateUtil {
 	
-	protected static final Logger logger = Logger.getLogger(DateUtil.class);
+	protected static final Logger logger = LogManager.getLogger(DateUtil.class);
 
 	public static final String MONGODB_DATETIME_FORMAT = "EEE MMM dd HH:mm:ss zzz yyyy";
 	

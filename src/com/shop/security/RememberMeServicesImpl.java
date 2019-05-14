@@ -11,7 +11,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
@@ -32,7 +33,7 @@ import com.shop.domain.TokenDomainObject;
 @Service
 public class RememberMeServicesImpl extends AbstractRememberMeServices  {
 	
-	private final Logger logger = Logger.getLogger(getClass());
+	private final Logger logger = LogManager.getLogger(getClass());
 	
 
     private static final int TOKEN_VALIDITY_SECONDS = 60 * 60 * 24 * AppConstant.TOKEN_VALIDITY_DAYS;

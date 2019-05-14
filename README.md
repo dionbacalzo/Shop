@@ -3,13 +3,13 @@
 
 ### Dependencies
 
-Java 8
- * [download](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+Java 11
+ * [download](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
  * [setup java PATH system variable](https://www.java.com/en/download/help/path.xml)
 
-Eclipse Oxygen
- * [download](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/oxygen2)
- * Recommended Java EE IDE due to gradle integration
+Eclipse 
+ * [download](https://www.eclipse.org/downloads/packages/)
+ * Download the latest IDE for the jdk integration
  * After installing/setting up Tomcat 9 and adding it on the Servers Tab view, double click on the Server. Under Server Location choose *Use Tomcat installation (takes control of Tomcat installation)* 
 
 Tomcat 9
