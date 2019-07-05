@@ -10,7 +10,7 @@
  docker run -d -p 8080:8080 update:2.0
  # access http://localhost:8080
 ```
- - if you want to check the contents inside a container the use the following command from bash/powershell
+ - if you want to check the contents inside a container then use the following command from bash/powershell
 	`docker exec -it <container id> bash`
  - you only need to run the first docker build once to create the platform image. The first image will contain all necessary tools (OS, Server, libraries) and will be used by the update image for every code changes.
  

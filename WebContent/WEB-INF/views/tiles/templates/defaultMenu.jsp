@@ -16,7 +16,7 @@
 			<c:when test="${isLoggedIn}">
 				<ul>
 					<li><a id="menu-home" href="content">Home</a></li>
-					<li><a id="menu-upload" href="upload">Upload</a></li>
+					<li><a id="menu-upload" href="upload">Manage</a></li>
 					<li><a id="menu-profile" href="profile">Profile</a></li>
 					<security:authorize access="hasAuthority('ADMIN')">
 						<li><a id="menu-admin" href="admin">Admin</a></li>

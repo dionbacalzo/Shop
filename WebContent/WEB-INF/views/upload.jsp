@@ -33,7 +33,15 @@
 			</form>
 		</div>
 		<div class="col-1">&nbsp;</div>
-
+		
+		<div class="col-12">
+			<div class="col-1">&nbsp;</div>
+			<div class="col-10">
+				<div class="title">Edit Items</div>
+			</div>
+			<div class="col-1">&nbsp;</div>
+		</div>
+		
 		<div class="col-12">
 			<div id='loader'></div>
 			<div class="col-1">&nbsp;</div>

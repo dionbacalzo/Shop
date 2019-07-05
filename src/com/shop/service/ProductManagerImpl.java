@@ -38,23 +38,35 @@ public class ProductManagerImpl implements ProductManager {
 	public ProductManagerImpl(ProductDao productDaoImpl) {
 		this.productDaoImpl = productDaoImpl;
 	}
-	
+	/**
+	 * returns a list of products structured in a specific format
+	 */
 	@Override
 	public Map<String, Object> viewAll() {
 		return ShopItemAdapter.parseItem(productDaoImpl.findAll());
 	}
-	
+	/**
+	 * returnds a list of products contained in a InventoryItem object,
+	 * Use this method instead of viewAll() for a more flexible way to manipulate the products
+	 */
 	@Override
 	public List<InventoryItem> viewAllUnparsed() {
 		return ShopItemAdapter.parseItemRaw(productDaoImpl.findAll());
 	}
 	
+	/**
+	 * return items made by a specific manufacturer
+	 */
 	@Override
 	public Map<String, Object> searchByManufacturer(String manufacturer) {
 		List<ItemDomainObject> itemList = productDaoImpl.findByManufacturer(manufacturer);
 		return ShopItemAdapter.parseItem(itemList);
 	}
 
+	/**
+	 * Update, insert or remove items
+	 * return a new list of all items after a successful transaction
+	 */
 	@Override
 	public List<InventoryItem> saveAll(List<InventoryItem> addList) {
 		logger.debug(AppConstant.METHOD_IN);		
@@ -63,10 +75,10 @@ public class ProductManagerImpl implements ProductManager {
 			List<ItemDomainObject> oldList = productDaoImpl.findAll();
 			List<ItemDomainObject> currentList = ShopItemAdapter.parseItemInventory(addList);
 			List<ItemDomainObject> deleteList = new ArrayList<ItemDomainObject>(oldList);
-			deleteList.removeAll(currentList);
-			
+			// remove all items not found anymore in the new list
+			deleteList.removeAll(currentList);			
 			productDaoImpl.deleteAll(deleteList);
-			
+			// insertor update the products
 			newList = productDaoImpl.saveAll(currentList);
 		} catch (DuplicateKeyException e) {
 			logger.error("Duplicate item " + e.getMessage());
@@ -81,6 +93,9 @@ public class ProductManagerImpl implements ProductManager {
 		return ShopItemAdapter.parseItemRaw(newList);		
 	}
 	
+	/**
+	 * insert all products into record
+	 */
 	@Override
 	public List<ItemDomainObject> insertAll(List<InventoryItem> addList) {
 		logger.debug(AppConstant.METHOD_IN);		
@@ -100,6 +115,9 @@ public class ProductManagerImpl implements ProductManager {
 		return itemList;		
 	}
 
+	/**
+	 * save all products found inside the file
+	 */
 	@Override
 	public void saveAll(MultipartFile file) throws Exception {
 		logger.debug(AppConstant.METHOD_IN);
@@ -124,6 +142,9 @@ public class ProductManagerImpl implements ProductManager {
 		logger.debug(AppConstant.METHOD_OUT);
 	}
 
+	/**
+	 * delete an item
+	 */
 	@Override
 	public void delete(InventoryItem item) throws ShopException {
 		logger.debug(AppConstant.METHOD_IN);
