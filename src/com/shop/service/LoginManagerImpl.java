@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -56,6 +57,11 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 			"ADMIN", 
 	}; 
 	
+	/**
+	 * validate user content
+	 * @param user
+	 * @return
+	 */
 	private boolean validateInput(User user){
 		boolean valid = true;
 		if(user.getUsername() == null || user.getUsername().trim().isEmpty()){
@@ -68,6 +74,11 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 		return valid;
 	}
 	
+	/**
+	 * validate user content when signing up
+	 * @param user
+	 * @return
+	 */
 	private boolean validateSignUpInput(User user){
 		boolean valid = validateInput(user);
 		if(user.getFirstname() == null || user.getFirstname().trim().isEmpty()){
@@ -86,6 +97,11 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 		return valid;
 	}
 	
+	/**
+	 * login a user
+	 * @param user
+	 * @return result: an object containing a status and message of the login result 
+	 */
 	@Override
 	public Result login(User user) {
 		logger.debug(AppConstant.METHOD_IN);
@@ -108,7 +124,7 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 	/**
 	 * Store user to session
 	 * @param user
-	 * @return
+	 * @return result: an object containing a status and message when storing user to the session
 	 */
 	public Result storeUser(User user){
 		logger.debug(AppConstant.METHOD_IN);
@@ -132,6 +148,11 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 		return result;
 	}
 	
+	/**
+	 * Check if the login attempt is valid
+	 * @param Authentication
+	 * @return Authentication 
+	 */
 	@Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
 		Result result = new Result(AppConstant.SHOP_LOGIN_SUCCESSFUL_STATUS, AppConstant.SHOP_LOGIN_SUCCESSFUL_MESSAGE);
@@ -184,6 +205,11 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
         return auth.equals(UsernamePasswordAuthenticationToken.class);
     }
     
+    /**
+     * Attempt to sign up a given user
+     * @param user
+	 * @return result: an object containing a status and message when signing up
+     */
     @Override
 	public Result signup(User user) {
 		logger.debug(AppConstant.METHOD_IN);
@@ -219,36 +245,75 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 		return result;
 	}
     
+    /**
+     * Check if a user session is allowed to be remembered
+     */
     @Override
 	public boolean allowUserRememberMeToken(User user) {
     	boolean allowtoken = false;
 		logger.debug(AppConstant.METHOD_IN);
 		
-		List<TokenDomainObject> tokenList = tokenDao.findByUserLogin(user.getUsername());
-		
-		if(tokenList == null || (tokenList != null && tokenList.size() < 10)) {
-			allowtoken = true;
-			logger.debug(tokenList.size());
-		} else {
-			logger.debug("exceeded remember me tokens for account " + user.getUsername());
-			cleanUserRememberMeToken(tokenList);
+		try {
+			List<TokenDomainObject> tokenList = tokenDao.findByUserLogin(user.getUsername());
+			
+			if(tokenList == null || (tokenList != null && tokenList.size() < AppConstant.TOKEN_MAX)) {
+				allowtoken = true;
+			} else {			
+				if(cleanRememberMeTokens(user, tokenList)) {
+					allowtoken = true;				
+				}
+			}
+		} catch (Exception e) {			
+			logger.error(MessageFormat.format(AppConstant.TOKEN_RETRIEVE_ERROR_MESSAGE, user.getUsername()));
 		}
 		
 		logger.debug(AppConstant.METHOD_OUT);
 		return allowtoken;
     }
-    
-	public void cleanUserRememberMeToken(List<TokenDomainObject> tokenList) {
+	
+	/**
+     * Remove a token of a user when it exceeds the maximum total allowed
+     * @param User, tokenList
+     */
+	public boolean cleanRememberMeTokens(User user, List<TokenDomainObject> tokenList) {
 		logger.debug(AppConstant.METHOD_IN);
+		
+		boolean hasDeleted = false;
+		try {
+			if(tokenList != null && !tokenList.isEmpty()) {				
 
-		for (TokenDomainObject token : tokenList) {
-			if (token.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
-					.plusDays(AppConstant.TOKEN_VALIDITY_DAYS).isBefore(LocalDateTime.now())) {
-				tokenDao.deleteById(token.get_id().toString());
+				// Remove all tokens from List and DB that have exceeded the days they are only valid
+				tokenList.removeIf(token -> 
+					{
+						boolean exceed = token.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+								.plusDays(AppConstant.TOKEN_VALIDITY_DAYS).isBefore(LocalDateTime.now());
+						if (exceed) {
+							logger.debug(MessageFormat.format(AppConstant.TOKEN_DELETE_MESSAGE, tokenList.get(0).get_id(), user.getUsername()));
+							tokenDao.deleteById(token.get_id().toString());
+						}
+						return exceed;
+					}
+				);
+				
+				// If the user account still exceeds the maximum number of tokens then delete the oldest token
+				if (tokenList.size() >= AppConstant.TOKEN_MAX) {
+					// sort dates from oldest to recent
+					tokenList.stream()
+				     .sorted(Comparator.comparing(TokenDomainObject::getDate, Comparator.nullsLast(Comparator.reverseOrder())));
+					
+					logger.debug(MessageFormat.format(AppConstant.TOKEN_DELETE_MESSAGE, tokenList.get(0).get_id(), user.getUsername()));
+					tokenDao.deleteById(tokenList.get(0).get_id().toString());					
+				}
+				hasDeleted = true;
 			}
+		} catch (Exception e) {
+			hasDeleted = false;
+			logger.error(MessageFormat.format(AppConstant.TOKEN_DELETE_ERROR_MESSAGE, user.getUsername()));
 		}
-
+		
 		logger.debug(AppConstant.METHOD_OUT);
+		
+		return hasDeleted;
 	}
 
 }

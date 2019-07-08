@@ -109,4 +109,13 @@ public class AppConstant {
 	// Token is valid for one month
 	public static final int TOKEN_VALIDITY_DAYS = 31;
 	
+	// maximum number of tokens allowed for one account
+	public static final int TOKEN_MAX = 10;
+	
+	public static final String TOKEN_DELETE_MESSAGE = "Trying to delete Remember me token with id {0} for user {1}";
+	
+	public static final String TOKEN_DELETE_ERROR_MESSAGE = "Unable to delete Remember me token of user: {0}";
+	
+	public static final String TOKEN_RETRIEVE_ERROR_MESSAGE = "Unable to check the Remember me tokens of user: {0}";
+	
 }

@@ -46,7 +46,7 @@ public class ProductManagerImpl implements ProductManager {
 		return ShopItemAdapter.parseItem(productDaoImpl.findAll());
 	}
 	/**
-	 * returnds a list of products contained in a InventoryItem object,
+	 * returns a list of products contained in a InventoryItem object,
 	 * Use this method instead of viewAll() for a more flexible way to manipulate the products
 	 */
 	@Override
@@ -78,7 +78,7 @@ public class ProductManagerImpl implements ProductManager {
 			// remove all items not found anymore in the new list
 			deleteList.removeAll(currentList);			
 			productDaoImpl.deleteAll(deleteList);
-			// insertor update the products
+			// insert or update the products
 			newList = productDaoImpl.saveAll(currentList);
 		} catch (DuplicateKeyException e) {
 			logger.error("Duplicate item " + e.getMessage());
