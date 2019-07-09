@@ -77,7 +77,7 @@ public class FileContentAdapter {
 				//then the save() method is equivalent to an update with the upsert option set to true and the query predicate on the _id field.
 				if(list.contains(item)){
 					item.set_id(list.get(list.indexOf(item)).get_id());
-					logger.debug("updating existing item" + item.getTitle());
+					logger.debug("updating existing item " + item.getTitle());
 				}
 				
 				

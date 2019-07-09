@@ -36,6 +36,7 @@ public class PropertyUtil {
 	 * @return
 	 */
 	public static String getProperty(String propertyKey, String filename) {
+		logger.debug(AppConstant.METHOD_IN);
 		String value = "";
 
 		Properties prop = new Properties();
@@ -73,8 +74,10 @@ public class PropertyUtil {
 					logger.error("Read property file error: " + e.getMessage());
 				}
 			}
-		}
+		}		
 		logger.info("Property: " + propertyKey + " Value : " + value);
+		
+		logger.debug(AppConstant.METHOD_OUT);
 		return value;
 	}
 
