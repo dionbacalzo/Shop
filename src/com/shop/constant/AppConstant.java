@@ -78,6 +78,10 @@ public class AppConstant {
 	
 	public static final String SHOP_PROFILE_INVALID_PICTURE = "invalid picture data";
 	
+	public static final String SHOP_PROFILE_UPDATE_LOG_SUCCESS = "User {0} has successfully updated profile info";
+	
+	public static final String SHOP_PROFILE_UPDATE_LOG_FAIL = "User {0} has failed to update profile info";
+	
 	public static final String SHOP_PASSWORD_UPDATE_UNSUCCESSFUL_STATUS = "FAIL";
 	
 	public static final String SHOP_PASSWORD_UPDATE_SUCCESSFUL_STATUS = "SUCCESS";
@@ -98,6 +102,8 @@ public class AppConstant {
 	
 	public static final String SHOP_PASSWORD_UPDATE_MESSAGE_FAIL = "Failed to change the password";
 	
+	public static final String SHOP_PASSWORD_UPDATE_LOG_MESSAGE_FAIL = "Password Update failed for User {0} : {1}";
+	
 	public static final List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/gif");
 	
 	public static final String SHOP_EXCEEDED_LOGIN_ATTEMPT = "exceeded login attempt";
@@ -117,5 +123,7 @@ public class AppConstant {
 	public static final String TOKEN_DELETE_ERROR_MESSAGE = "Unable to delete Remember me token of user: {0}";
 	
 	public static final String TOKEN_RETRIEVE_ERROR_MESSAGE = "Unable to check the Remember me tokens of user: {0}";
+	
+	public static final String TOKEN_CREATE_ERROR_MESSAGE = "Unable to create Remember me Token";
 	
 }

@@ -27,8 +27,12 @@ public class UserDaoCustomImpl implements UserDaoCustom {
 		this.mongoTemplate = mongoTemplate;
 	}
 
+	/**
+	 * Updates details of a User that matches the given username
+	 * @return UserDomainObject returns a null object if update is unsuccessful
+	 */
 	@Override
-	public UserDomainObject UpdateNameByUserName(String username, User user) {
+	public UserDomainObject updateByUserName(String username, User user) {
 		logger.debug(AppConstant.METHOD_IN);
 
 		UserDomainObject userDomainObj = null;
@@ -57,8 +61,11 @@ public class UserDaoCustomImpl implements UserDaoCustom {
 		return userDomainObj;
 	}
 
+	/**
+	 * Update the password of a user that matches a given username
+	 */
 	@Override
-	public Result UpdatePasswordByUserName(String username, String newPassword) {
+	public Result updatePasswordByUserName(String username, String newPassword) {
 		logger.debug(AppConstant.METHOD_IN);
 
 		Result result = new Result();

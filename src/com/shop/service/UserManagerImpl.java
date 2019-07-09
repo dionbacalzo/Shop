@@ -1,6 +1,7 @@
 package com.shop.service;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,9 @@ public class UserManagerImpl implements UserManager {
 	@Autowired
     private UserDetailsService userDetailsService;
 
+	/**
+	 * Retrieves a list of accounts that exceeded the maximum login attempt
+	 */
 	@Override
 	public List<User> getAccountsToReset() {
 		logger.debug(AppConstant.METHOD_IN);
@@ -55,6 +59,10 @@ public class UserManagerImpl implements UserManager {
 		return userList;
 	}
 
+	/**
+	 * Resets the try counter of a list of users
+	 * @return List of users that still exceeded the maximum login attempt 
+	 */
 	@Override
 	public List<User> resetAccounts(List<User> userList) {
 		logger.debug(AppConstant.METHOD_IN);
@@ -71,6 +79,11 @@ public class UserManagerImpl implements UserManager {
 		return getAccountsToReset();
 	}
 
+	/**
+	 * Retrieves a User object that matches a given username
+	 * @param username the unique identifier of an account
+	 * @return User object containing all the details
+	 */
 	@Override
 	public User retrieveByUsername(String username) {
 		logger.debug(AppConstant.METHOD_IN);
@@ -81,6 +94,12 @@ public class UserManagerImpl implements UserManager {
 		return new UserAdapter(user);
 	}
 
+	/**
+	 * Checks if the content of an account is valid
+	 * @param user
+	 * @param picture the profile picture of the account
+	 * @return boolean
+	 */
 	private boolean validateInput(User user, MultipartFile picture) {
 		boolean valid = true;
 		if (user == null) {
@@ -99,8 +118,11 @@ public class UserManagerImpl implements UserManager {
 		return valid;
 	}
 
+	/**
+	 * Updates the information of a user that matches a given username
+	 */
 	@Override
-	public User updateNameByUsername(String username, String userJSON, MultipartFile picture) {
+	public User updateByUsername(String username, String userJSON, MultipartFile picture) {
 		logger.debug(AppConstant.METHOD_IN);
 		
 		User user = null;
@@ -123,15 +145,28 @@ public class UserManagerImpl implements UserManager {
 					logger.error(AppConstant.SHOP_PROFILE_INVALID_PICTURE);
 				}
 			}
-			updatedUser = new UserAdapter(userDaoImpl.UpdateNameByUserName(username, user));
+			UserDomainObject updatedUserDomainObj = userDaoImpl.updateByUserName(username, user);			
+			if (updatedUserDomainObj != null) {
+				updatedUser = new UserAdapter(updatedUserDomainObj);
+				logger.debug(MessageFormat.format(AppConstant.SHOP_PROFILE_UPDATE_LOG_SUCCESS,username));
+			} else {
+				logger.debug(MessageFormat.format(AppConstant.SHOP_PROFILE_UPDATE_LOG_FAIL,username));
+			}
 		} else {
-			logger.error(AppConstant.SHOP_PROFILE_INVALID_INPUT);
+			logger.debug(AppConstant.SHOP_PROFILE_INVALID_INPUT);
 		}
 
 		logger.debug(AppConstant.METHOD_OUT);
 		return updatedUser;
 	}
 
+	/**
+	 * Check if the content of the password fields are valid
+	 * @param oldPassword the current password the user wish to change
+	 * @param newPassword the new password
+	 * @param newPasswordRetype the old password retyped to compare
+	 * @return Result containing validation status and message 
+	 */
 	private Result validatePasswords(String oldPassword, String newPassword, String newPasswordRetype) {
 		Result result = new Result(AppConstant.SHOP_PASSWORD_UPDATE_SUCCESSFUL_STATUS,
 				AppConstant.SHOP_PASSWORD_UPDATE_MESSAGE_SUCCESS);
@@ -155,6 +190,9 @@ public class UserManagerImpl implements UserManager {
 		return result;
 	}
 
+	/**
+	 * Updates the password of the currently logged in user
+	 */
 	@Override
 	public Result updatePassword(UserDetails userInSession, Object object) {
 		logger.debug(AppConstant.METHOD_IN);
@@ -174,21 +212,22 @@ public class UserManagerImpl implements UserManager {
 				// check if password given matches current password
 				boolean matched = SCryptUtil.check(oldPassword, userInSession.getPassword());
 				if (matched) {
-					result = userDaoImpl.UpdatePasswordByUserName(userInSession.getUsername(),
+					result = userDaoImpl.updatePasswordByUserName(userInSession.getUsername(),
 							SCryptUtil.scrypt(newPassword, 16, 16, 16));
 					// update the current password in session
 					if (result.getStatus() != AppConstant.SHOP_PASSWORD_UPDATE_UNSUCCESSFUL_STATUS) {
 						UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
 								userDetailsService.loadUserByUsername(userInSession.getUsername()), newPassword, userInSession.getAuthorities());
 						SecurityContextHolder.getContext().setAuthentication(authToken);
+						logger.debug(userInSession.getUsername() + " " + result.getMessage());
 					}
 				} else {
 					result = new Result(AppConstant.SHOP_PASSWORD_UPDATE_UNSUCCESSFUL_STATUS,
 							AppConstant.SHOP_PASSWORD_UPDATE_UNSUCCESSFUL_INCORRECT_PASSWORD);
-					logger.error(result.getMessage());
+					logger.debug(MessageFormat.format(AppConstant.SHOP_PASSWORD_UPDATE_LOG_MESSAGE_FAIL,userInSession.getUsername(), result.getMessage()));
 				}
 			} else {
-				logger.error(result.getMessage());
+				logger.debug(MessageFormat.format(AppConstant.SHOP_PASSWORD_UPDATE_LOG_MESSAGE_FAIL,userInSession.getUsername(), result.getMessage()));
 			}
 
 		} catch (IOException e) {

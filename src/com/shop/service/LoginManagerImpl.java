@@ -261,6 +261,8 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 			} else {			
 				if(cleanRememberMeTokens(user, tokenList)) {
 					allowtoken = true;				
+				} else {
+					logger.error(AppConstant.TOKEN_CREATE_ERROR_MESSAGE);
 				}
 			}
 		} catch (Exception e) {			

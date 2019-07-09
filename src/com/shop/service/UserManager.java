@@ -20,6 +20,6 @@ public interface UserManager {
 
 	public Result updatePassword(UserDetails userInSession, Object object);
 
-	public User updateNameByUsername(String username, String userJSON, MultipartFile picture);
+	public User updateByUsername(String username, String userJSON, MultipartFile picture);
 	
 }

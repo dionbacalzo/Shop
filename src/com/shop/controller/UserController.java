@@ -130,10 +130,10 @@ public class UserController {
 	
 	/**
 	 * updates the details of the current logged in user
-	 * @param authentication
+	 * @param authentication the current authentication details in session
 	 * @param userJSON required, contains the firstname and lastname of the user
 	 * @param picture optional, the profile picture
-	 * @return user profile
+	 * @return user object, returns a null object if the update is unsuccessful
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "updateUser")
@@ -144,7 +144,7 @@ public class UserController {
 		try {
 			if (authentication != null && authentication.getPrincipal() != null) {
 				UserDetails userInSession = (UserDetails) authentication.getPrincipal();
-				User user = userManagerImpl.updateNameByUsername(userInSession.getUsername(), userJSON, picture);
+				User user = userManagerImpl.updateByUsername(userInSession.getUsername(), userJSON, picture);
 				json = mapper.writeValueAsString(user);
 			}
 		} catch (Exception e){

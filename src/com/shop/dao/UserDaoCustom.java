@@ -6,8 +6,8 @@ import com.shop.dto.User;
 
 public interface UserDaoCustom {
 	
-	public UserDomainObject UpdateNameByUserName(String username, User user);
+	public UserDomainObject updateByUserName(String username, User user);
 	
-	public Result UpdatePasswordByUserName(String username, String newPassword);
+	public Result updatePasswordByUserName(String username, String newPassword);
 	
 }
