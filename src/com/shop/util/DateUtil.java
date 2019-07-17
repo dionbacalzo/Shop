@@ -16,6 +16,9 @@ public class DateUtil {
 	
 	protected static final Logger logger = LogManager.getLogger(DateUtil.class);
 
+	/**
+	 * This is the Date pattern MongoDB follows
+	 */
 	public static final String MONGODB_DATETIME_FORMAT = "EEE MMM dd HH:mm:ss zzz yyyy";
 	
 	public static final String DEFAULT_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
@@ -40,6 +43,13 @@ public class DateUtil {
 		return getDate(stringDate, MONGODB_DATETIME_FORMAT);
 	}
 	
+	/**
+	 * Retrieve the java.util.Date value from a date string to be parsed in a given date pattern
+	 * @param stringDate
+	 * @param pattern
+	 * @return
+	 * @throws ShopException
+	 */
 	public static Date getDate(String stringDate, String pattern) throws ShopException {
 		Date parsedDate = null;
 		if(stringDate != null && stringDate != "") {
@@ -60,14 +70,23 @@ public class DateUtil {
 		return parsedDate;
 	}
 	
+	/**
+	 * Check if a given date value matches a given date format 
+	 * @param dateToValidate
+	 * @param dateFormat
+	 * @return
+	 */
 	public static boolean isThisDateValid(String dateToValidate, String dateFormat){
 		boolean result = false;
 		if(dateToValidate != null){
 			if(dateFormat.equals(ISO_8601_FORMAT)){
 				try {
 		            DateTimeFormatter.ISO_DATE_TIME.parse(dateToValidate);
+		            logger.debug("Matching date format is " + dateFormat);
 		            result = true;
 		        } catch (DateTimeParseException e) {
+		        	logger.debug("Unable to format using " + dateFormat);
+					logger.debug(e.getMessage());
 		        	result = false;
 		        }
 			} else {

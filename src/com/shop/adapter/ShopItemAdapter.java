@@ -175,6 +175,11 @@ public class ShopItemAdapter {
 		return shopContent;
 	}
 
+	/**
+	 * Parse InventoryItem list into ItemDomainObject list to ready for record save
+	 * @param itemList
+	 * @return
+	 */
 	public static List<ItemDomainObject> parseItemInventory(List<InventoryItem> itemList) {
 		logger.debug(AppConstant.METHOD_IN);
 		
@@ -184,6 +189,7 @@ public class ShopItemAdapter {
 			itemList.forEach((InventoryItem item) -> {
 				try {
 					if(ShopUtil.validateItemInventory(item)) {
+						logger.debug("Parsing item " + item.getTitle());
 						ItemDomainObject product = new ItemDomainObject();					
 						if (!StringUtils.isEmpty(item.getId())) {
 							product.set_id(new ObjectId(item.getId()));

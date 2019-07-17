@@ -14,6 +14,11 @@ public class ShopUtil {
 	
 	private final static Logger logger = LogManager.getLogger(ShopItemAdapter.class);
 	
+	/**
+	 * Validate ItemDomainObject object contents
+	 * @param item
+	 * @return
+	 */
 	public static boolean validateItemDomain(ItemDomainObject item) {
 		boolean result = true;
 		if (item != null) {
@@ -26,12 +31,26 @@ public class ShopUtil {
 			} else if (item.getPrice() == null) {
 				result = false;
 			}
-		} else {
+		} else {			
 			result = false;
 		}
+		
+		if(!result) {
+			if(item.getTitle() != null) {
+				logger.debug("Item " + item.getTitle() + " is invalid");
+			} else {
+				logger.debug("An item is invalid");
+			}
+		}
+		
 		return result;
 	}
 	
+	/**
+	 * Validate InventoryItem object contents
+	 * @param item
+	 * @return
+	 */
 	public static boolean validateItemInventory(InventoryItem item) {
 		boolean result = true;
 		if (item != null) {
@@ -49,9 +68,24 @@ public class ShopUtil {
 		} else {
 			result = false;
 		}
+		
+		if(!result) {
+			if(item.getTitle() != null) {
+				logger.debug("Item " + item.getTitle() + " is invalid");
+			} else {
+				logger.debug("An item is invalid");
+			}
+		}
+		
 		return result;
 	}
 	
+	/**
+	 * Formats a price string into a BigDecimal value
+	 * @param price
+	 * @return
+	 * @throws ShopException
+	 */
 	public static BigDecimal formatPrice(String price) throws ShopException {
 		BigDecimal parsedPrice = null;
 		if (price != null) {
