@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shop.constant.AppConstant;
 import com.shop.dto.InventoryItem;
 import com.shop.dto.Item;
+import com.shop.dto.Result;
 import com.shop.dto.ShopContentPage;
 import com.shop.service.ProductManager;
 
@@ -174,7 +175,10 @@ public class ShopController {
 	public String uploadItems(@RequestParam("file") MultipartFile file) {
 		logger.debug(AppConstant.METHOD_IN);
 		
+		Result result = new Result();
 		String message = "";
+		ObjectMapper mapper = new ObjectMapper();
+		String json = null;
 		if (file != null && !file.isEmpty()) {
 			try {
 				File shopFile = new File(file.getOriginalFilename()); //get the filename, works for all browsers especially IE/Edge
@@ -182,16 +186,25 @@ public class ShopController {
 				productManagerImpl.saveAll(file);
 				
 				message = MessageFormat.format(AppConstant.SHOP_ITEM_UPLOAD_SUCCESS, shopFile.getName());
+				result = new Result(AppConstant.SHOP_ITEM_UPLOAD_SUCCESSFUL_STATUS, message);				
 			} catch (Exception e) {
 				logger.error(e);
 				message = AppConstant.SHOP_ITEM_UPLOAD_FAIL_MESSAGE;
+				result = new Result(AppConstant.SHOP_ITEM_UPLOAD_UNSUCCESSFUL_STATUS, message);
 			}
 		} else {
 			message = AppConstant.SHOP_ITEM_FILE_EMPTY;
+			result = new Result(AppConstant.SHOP_ITEM_UPLOAD_UNSUCCESSFUL_STATUS, message);
+		}
+		
+		try {
+			json = mapper.writeValueAsString(result);
+		} catch (JsonProcessingException e) {
+			logger.error(e);
 		}
 		
 		logger.debug(AppConstant.METHOD_OUT);
-		return message;
+		return json;
 	}
 	
 	@RequestMapping(value = "delete")

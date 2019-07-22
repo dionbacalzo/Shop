@@ -20,6 +20,10 @@ public class AppConstant {
 	
 	public static final String SHOP_ITEM_FILE_EMPTY = "Failed to upload because the file was empty";
 	
+	public static final String SHOP_ITEM_UPLOAD_UNSUCCESSFUL_STATUS = "FAIL";
+	
+	public static final String SHOP_ITEM_UPLOAD_SUCCESSFUL_STATUS = "SUCCESS";
+	
 	public static final String SHOP_ITEM_UPLOAD_FAIL_MESSAGE = "Failed to upload file";
 	
 	public static final String SHOP_ITEM_UPLOAD_FAIL = "Failed to upload file";

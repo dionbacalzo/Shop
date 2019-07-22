@@ -91,9 +91,15 @@ function initializeUploadForm() {
 				complete : function() {
 					$loader.hide();
 				},
-				success : function(data) {
-					$uploadResult.addClass(successCss);
-					$uploadResult.text(data);
+				success : function(data) {					
+					data = JSON.parse(data);
+					if(data.status.toUpperCase() === "FAIL".toUpperCase()){
+						$uploadResult.addClass(warningCss);
+						$uploadResult.text(data.message);
+					} else {
+						$uploadResult.addClass(successCss);
+						$uploadResult.text(data.message);					
+					}
 					// reset input form
 					$uploadFileInput.val("");
 					// reload history
