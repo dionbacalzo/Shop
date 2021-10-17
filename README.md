@@ -27,6 +27,7 @@ After installing the dependencies stated above run the following commands
 
 ```
 	git clone https://github.com/dionbacalzo/Shop //download the repository
+	// update or remove the proxy found at gradle.properties
 	gradlew.bat build -x test // or ./gradlew build -x test if using Unix based system, don't run tests on first build
 	gradlew.bat eclipse // to setup eclipse setting and be ready for import
 	
