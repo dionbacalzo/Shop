@@ -14,6 +14,7 @@ Eclipse
 
 Tomcat 9
  * [download](https://tomcat.apache.org/download-90.cgi)
+ * At build.properties edit the appserver.home property with the tomcat directory path
 	
 Mongodb 
  * Download the [Community server](https://www.mongodb.com/try/download/community). Select the Community Edition for the free download
